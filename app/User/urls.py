@@ -2,7 +2,7 @@ from django.urls import path
 from django.urls import include, path
 from . import views
 
-app_name = 'Home'
+app_name = 'User'
 urlpatterns = [
     # Funtion view
     # path('', views.index, name='index'),
