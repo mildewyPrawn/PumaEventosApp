@@ -13,7 +13,25 @@ def Index(request):
         Index in my Web Page.
     """
     print(request.method)
-    template = 'Home/index.html'
+    template = 'User/index.html'
+    context = {}
+    return render(request, template, context)
+
+def Login(request):
+    """
+        Login to Web Page.
+    """
+    print(request.method)
+    template = 'User/registration/login.html'
+    context = {}
+    return render(request, template, context)
+
+def Register(request):
+    """
+        Login to Web Page.
+    """
+    print(request.method)
+    template = 'User/registration/register.html'
     context = {}
     return render(request, template, context)
 
