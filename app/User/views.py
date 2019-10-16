@@ -8,7 +8,7 @@ from django.contrib.auth.views import LoginView
 from .utils import IsNotAuthenticatedMixin
 
 from .models import Usuario
-from .forms import SingUpForm, SingInForm
+from .forms import SingUpForm, SingInForm, CreateUrs
 # from Post.models import Post
 # from Home.forms import LoginForm
 # Function Views
@@ -27,14 +27,17 @@ class HomeView(LoginRequiredMixin, CreateView):
         return render(request, self.template)
 
 class SingUpView(CreateView):
-    model = Usuario
+    #model = Usuario
     template = 'User/registration/register.html'
     def get(self, request):
-        form = SingUpForm()
+        form = CreateUrs()
+        #form2 = SingUpForm()
         return render(request, self.template)
 
     def post(self, request):
-        form = SingUpForm(request.POST, instance=request.user)
+        form = CreateUrs(request.POST, request.FILES)
+        #form2 = SingUpForm(request.POST)
+        
         return render(request, self.template)
 
 
@@ -47,12 +50,16 @@ class SignInView(IsNotAuthenticatedMixin, View):
     template = 'User/registration/login.html'
     def get(self, request):
         form = SingInForm()
+        if request.user.is_authenticated():
+            return redirect('/home/')
         return render(request, self.template)
 
     def post(self, request):
         """
             Validates and do the login
         """
+        #if request.user.is_authenticated():
+        #    return redirect('/home/')
         form = SingInForm(request.POST)
         if form.is_valid():
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])

@@ -11,15 +11,27 @@ class SingInForm(forms.Form):
     username = forms.CharField(label='Username', max_length=100)
     password = forms.CharField(label='Password')
 
+class CreateUrs(UserCreationForm):
+    class Meta:
+        avatar = forms.ImageField(required=False)
+        model = User
+        fields = (
+            'username',
+            'password1',
+            'password2',
+            #'avatar',
+        )
+
 class SingUpForm(UserCreationForm):
     #email = forms.EmailField(max_length=200, help_text='Required', required=True)
+
     avatar = forms.ImageField(required=False)
-    #username = forms.CharField(label='Username', max_length=100)
     email = forms.EmailField(max_length=200, help_text='Required')
     class Meta:
+        #password = forms.CharField(widget=forms.PasswordInput)
         model = Usuario
         fields = (
-            #'username',
+            #'user__username',
             'avatar',
             'email',
         )

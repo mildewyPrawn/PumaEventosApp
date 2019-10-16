@@ -11,8 +11,8 @@ class Usuario(models.Model):
     #email = models.EmailField(max_length=75)
     #contraseña
     #foto
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='images/')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, default=1)
+    avatar = models.ImageField(upload_to='images/', blank=True, null=True)
 
 class EntidadAcademica(models.Model):
     nombre = models.CharField(max_length=255)
