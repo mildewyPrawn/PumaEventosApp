@@ -22,6 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("MY_KEY")
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -124,5 +125,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#LOGIN_URL = '/login/'
+LOGIN_URL = '/login/'
 #LOGIN_REDIRECT_URL = '/'

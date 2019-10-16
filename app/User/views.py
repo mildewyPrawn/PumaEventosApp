@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.views import LoginView
+from .utils import IsNotAuthenticatedMixin
 
 from .models import Usuario
 from .forms import SingUpForm, SingInForm
@@ -19,15 +21,28 @@ def Index(request):
     context = {}
     return render(request, template, context)
 
+class HomeView(LoginRequiredMixin, CreateView):
+    template = 'User/indexpl.html'
+    def get(self, request):
+        return render(request, self.template)
+
 class SingUpView(CreateView):
     model = Usuario
-    form = SingUpForm
-    def form_valid(self, form):
-        #Envio de correo aun no implementado
-        return redirect('/')
+    template = 'User/registration/register.html'
+    def get(self, request):
+        form = SingUpForm()
+        return render(request, self.template)
+
+    def post(self, request):
+        form = SingUpForm(request.POST, instance=request.user)
+        return render(request, self.template)
+
+
+    #def form_valid(self, form):   
+    #    return redirect('/')
 
 #Login que si hace algo.
-class SignInView(LoginView):
+class SignInView(IsNotAuthenticatedMixin, View):
     #template_name = 'User/registration/login.html'
     template = 'User/registration/login.html'
     def get(self, request):
@@ -43,14 +58,17 @@ class SignInView(LoginView):
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                if request.GET.get("next", None) is not None:
-                    return redirect(request.GET.get("next"))
-                return redirect('/')
+                #if request.GET.get("next", None) is not None:
+                #    return redirect(request.GET.get("next"))
+                return redirect('/home/')
 
         #self.context['form'] = form
         return render(request, self.template)
 
-
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        logout(request)
+        return redirect("/")
 
 def Register(request):
     """
