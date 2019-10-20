@@ -61,6 +61,16 @@ def Register(request):
     context = {}
     return render(request, template, context)
 
+
+def Events(request):
+    """
+        Events home Page
+    """
+    print(request.method)
+    template = 'User/events/home.html'
+    context = {}
+    return render(request, template, context)
+
 class About(View):
     """
         About me page.
