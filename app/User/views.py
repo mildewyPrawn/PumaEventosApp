@@ -15,7 +15,7 @@ def Index(request):
         Index in my Web Page.
     """
     print(request.method)
-    template = 'User/index.html'
+    template = 'User/general/index.html'
     context = {}
     return render(request, template, context)
 
@@ -65,7 +65,7 @@ class About(View):
     """
         About me page.
     """
-    template = 'Home/about.html'
+    template = 'User/general/about.html'
     context = {'title': 'About me'}
 
     def get(self, request):
