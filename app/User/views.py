@@ -54,7 +54,7 @@ class SignInView(LoginView):
 
 def Register(request):
     """
-        Login to Web Page.
+        Register to app.
     """
     print(request.method)
     template = 'User/registration/register.html'
