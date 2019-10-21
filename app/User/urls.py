@@ -9,7 +9,7 @@ urlpatterns = [
     # path('', views.index, name='index'),
     # Class-based Views
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    #path('accounts/', include('django.contrib.auth.urls')),
     #TODAS LAS SIGUIENTES DIRECCIONES VIENEN CON LA DE ARRIBA
     #;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     #accounts/login/ [name='login']
@@ -27,6 +27,9 @@ urlpatterns = [
     path('', views.Index, name='index'),
     path('home/', views.Index, name='index'),
     path('about/', views.About.as_view(), name='about'),
+    path('login/', views.SignInView.as_view(), name='login'),
+    # path('login/register.html/', views.Register, name='register'), # no sé si sirva
+    path('register/', views.Register, name='register'),
     path('events/', views.Events, name='events'),
     path('events/index.html/', views.Events, name='events'),
     path('events/index/', views.Events, name='events'),
@@ -39,8 +42,6 @@ urlpatterns = [
     #path('home/login/', views.SignInView.as_view(), name='login'),
     #path('login/register.html/', views.Register, name='register'),
     #path('register/', views.Register, name='register2'),
-
-
     # path('about/', views.About.as_view(), name='about'),
     # path('login/', views.Login.as_view(), name='login'),
     # path('logout/', views.Logout.as_view(), name='logout'),

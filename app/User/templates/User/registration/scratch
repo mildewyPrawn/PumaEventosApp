@@ -1,0 +1,39 @@
+                  <form class="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="exampleInputName1">Username</label>
+                      <input type="text" class="form-control" id="exampleInputName1" placeholder="username"> </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">First name</label>
+                      <input type="text" class="form-control" id="exampleInputName1" placeholder="first name"> </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Last name</label>
+                      <input type="text" class="form-control" id="exampleInputName1" placeholder="last name (optional)"> </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Email address</label>
+                      <input type="email" class="form-control" id="exampleInputEmail3" placeholder="somemail@school.unam.mx"> </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword4">Password</label>
+                      <input type="password" class="form-control" id="exampleInputPassword4" placeholder="Password"> </div>
+                    <div class="form-group">
+                      <label>File upload</label>
+                      <input type="file" name="img[]" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                        <span class="input-group-append">
+                          <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputCity1">Academic Entity</label>
+                      <input type="text" class="form-control" id="exampleInputCity1" placeholder="Where do you come from?"> </div>
+                    <div class="form-group">
+                      <button class="btn btn-light">Cancel</button>      
+                  </form>
+
+
+                  
+                  <button type="submit" class="btn btn-success mr-2">Submit</button>
+                  </div>
+                </form>

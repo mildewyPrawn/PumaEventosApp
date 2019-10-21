@@ -5,7 +5,7 @@ from django.views import View
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.views import LoginView
 
-from .models import Usuario
+from .models import User
 from .forms import SingUpForm, SingInForm
 # from Post.models import Post
 # from Home.forms import LoginForm
@@ -19,8 +19,32 @@ def Index(request):
     context = {}
     return render(request, template, context)
 
+class SingUpView(CreateView):
+    model = User
+    form = SingUpForm
+    def form_valid(self, form):
+        #Envio de correo aun no implementado
+        return redirect('/')
 
+#Login que si hace algo.
+class SignInView(LoginView):
+    template = 'User/registration/login.html'
+    def get(self, request):
+        form = SingInForm()
+        return render(request, self.template)
 
+    def post(self, request):
+        """
+            Validates and do the login
+        """
+        form = SingInForm(request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                if request.GET.get("next", None) is not None:
+                    return redirect(request.GET.get("next"))
+                return redirect('../about')
 
 
 
@@ -34,7 +58,7 @@ def Index(request):
 
 def Register(request):
     """
-        Login to Web Page.
+        Register to app.
     """
     print(request.method)
     template = 'User/registration/register.html'
@@ -79,3 +103,17 @@ class About(View):
             Get in About me.
         """
         return render(request, self.template, self.context)
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
