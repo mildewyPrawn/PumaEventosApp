@@ -3,7 +3,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from User.models import User
-from composite_field import CompositeField
+from compositefk.fields import CompositeForeignKey, LocalFieldValue
+
 # Create your models here.
 
 class Etiqueta(models.Model):
@@ -31,16 +32,18 @@ class Invitacion(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     activa = models.BooleanField()
     asistencia_activa = models.BooleanField()
-    id = CompositeField(evento_id,User_id, primary_key=True)
+    #id = CompositeForeignKey(id,on_delete=models.CASCADE,to_fields={"evento_id","user_id"})
+
+    class Meta:
+        unique_together = (('evento_id', 'user_id'),)
     #codigo_qr ......
 
 class Staff(models.Model):
-    user_id = models.ManyToManyField(User)
-    evento_id = models.ManyToManyField(Evento)
-    staff_id = models.OneToOneField(User, on_delete=models.CASCADE,
-                                    parent_link=True)
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE, related_name="staffs")
+    evento_id = models.ForeignKey(Evento,on_delete=models.CASCADE)
 
 class ValidaInvitacion(models.Model):
-    user_id = models.ForeignKey(Staff)
-    invitacion_id = models.ForeignKey(Invitacion)
-    id = models.CompositeField(User_id,invitacion_id, primary_key=True)    
+    user_id = models.ForeignKey(Staff,on_delete=models.CASCADE)
+    invitacion_id = models.ForeignKey(Invitacion,on_delete=models.CASCADE)
+    class Meta:
+        unique_together = (('user_id', 'invitacion_id'),)    
