@@ -35,6 +35,8 @@ urlpatterns = [
     path('events/home', views.Events, name='eventsHome'),
     path("logout", views.logout_request, name="logout"),
 
+    path("error505", views.error505, name="error505"),
+
 
     #path('login/', views.SignInView.as_view(), name='login'),
     #path('home/login/', views.SignInView.as_view(), name='login'),

@@ -19,6 +19,12 @@ def Index(request):
     context = {}
     return render(request, template, context)
 
+def error505(request):
+    print(request.method)
+    template = 'User/general/505.html'
+    context = {}
+    return render(request, template, context)
+
 class SingUpView(CreateView):
     model = User
     form = SingUpForm
