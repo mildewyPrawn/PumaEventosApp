@@ -12,7 +12,7 @@ class SingInForm(forms.Form):
     password = forms.CharField(label='Password')
 
 class CreateUrs(UserCreationForm):
-    avatar = forms.ImageField(required=False)
+    avatar = forms.ImageField(required=False, help_text='Puedes no poner una imagen.')
     #def __init__(self, *args, **kwargs):
     #    super(CreateUrs, self).__init__(*args, **kwargs)
     #    for field_name, field in self.fields.items():

@@ -70,7 +70,7 @@ class SingUpView(CreateView):
             return HttpResponse('Please confirm your email address to complete the registration')
         else:
             form = CreateUrs()
-        print(form.errors)
+        print(form.errors, "asdads")
         return render(request, self.template, {'form': form})
             #messages.info(request, 'Your password has been changed successfully!')
             #return HttpResponseRedirect("/")
