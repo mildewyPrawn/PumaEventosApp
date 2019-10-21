@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.views import LoginView
 
@@ -55,7 +56,7 @@ class SignInView(View):
                 login(request, user)
                 if request.GET.get("next", None) is not None:
                     return redirect(request.GET.get("next"))
-                return redirect('../about')
+                return redirect('../events')
             #messages.add_message(request, messages.INFO, 'Hello world.')
             return render(request, self.template)
         #self.context['form'] = form
@@ -70,6 +71,16 @@ def Register(request):
     context = {}
     return render(request, template, context)
 
+class Eventos(LoginRequiredMixin, CreateView):
+    def get(self, request):
+        print(request.method)
+        template = 'User/events/home.html'
+        user = request.user.get_username()
+        print("...............................")
+        print(user)
+        print("...............................")
+        context = {'user':user}
+        return render(request, template, context)
 
 def Events(request):
     """
