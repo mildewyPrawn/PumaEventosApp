@@ -22,8 +22,6 @@ urlpatterns = [
     #accounts/reset/done/ [name='password_reset_complete']
     #;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
     path('', views.Index, name='index'),
     path('home/', views.Index, name='index'),
     path('about/', views.About.as_view(), name='about'),
