@@ -33,6 +33,7 @@ urlpatterns = [
     path('events/index/', views.Events, name='events'),
     path('events/home.html', views.Events, name='eventsHome'),
     path('events/home', views.Events, name='eventsHome'),
+    path('events/all', views.EventsList, name='eventsList'),
     path("logout", views.logout_request, name="logout"),
 
     path("error505", views.error505, name="error505"),

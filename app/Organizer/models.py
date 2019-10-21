@@ -22,7 +22,7 @@ class Evento(models.Model):
     horario_fin = models.TimeField()
     capacidad = models.IntegerField()
     etiqueta = models.ManyToManyField(Etiqueta)
-    organizador = models.OneToOneField(User, on_delete=models.CASCADE)
+    organizador = models.ForeignKey(User, on_delete=models.CASCADE)
     #periodicidad =
 
 

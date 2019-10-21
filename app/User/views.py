@@ -5,6 +5,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.views import LoginView
+from Organizer.models import *
 
 from .models import User
 from .forms import SingUpForm, SingInForm
@@ -93,6 +94,23 @@ def Events(request):
     print(user)
     print("...............................")
     context = {'user':user}
+    return render(request, template, context)
+
+
+
+def EventsList(request):
+    """
+        All Events home Page
+    """
+    print(request.method)
+    template = 'User/events/all.html'
+    user = request.user.get_username()
+    events = Evento.objects.all()
+
+    print("...............................")
+    print(user)
+    print("...............................")
+    context = {'user':user,'events':events}
     return render(request, template, context)
 
 
