@@ -27,34 +27,33 @@ class SingUpView(CreateView):
         return redirect('/')
 
 #Login que si hace algo.
-class SignInView(LoginView):
+class SignInView(View):
     template = 'User/registration/login.html'
     def get(self, request):
         form = SingInForm()
+        print("im here")
         return render(request, self.template)
-
+    
     def post(self, request):
         """
             Validates and do the login
         """
+        #if request.user.is_authenticated():
+        #    return redirect('/home/')
         form = SingInForm(request.POST)
+        print("im here")
         if form.is_valid():
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            print(user, "asdasdasdad")
             if user is not None:
                 login(request, user)
                 if request.GET.get("next", None) is not None:
                     return redirect(request.GET.get("next"))
                 return redirect('../about')
-
-
-
-
-
-
-
-
-
-
+            #messages.add_message(request, messages.INFO, 'Hello world.')
+            return render(request, self.template)
+        #self.context['form'] = form
+        return render(request, self.template)
 
 def Register(request):
     """
