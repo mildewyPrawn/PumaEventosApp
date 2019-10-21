@@ -39,6 +39,8 @@ class CreateUrs(UserCreationForm):
     def clean_avatar(self):
         avatar = self.cleaned_data['avatar']
         print(avatar)
+        if avatar is None:
+            return None
         #retunr null
         try:
             w, h = get_image_dimensions(avatar)
