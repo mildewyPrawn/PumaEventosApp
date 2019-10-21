@@ -24,7 +24,9 @@
           <div class="row w-100">
             <div class="col-lg-4 mx-auto">
               <div class="auto-form-wrapper">
-                <form action="#">
+                <form method="post">
+                  {% csrf_token %}
+                  {{ form.as_p }}
                   <div class="form-group">
                     <label class="label">Username</label>
                     <div class="input-group">
@@ -66,6 +68,8 @@
                     <a href="register.html" class="text-black text-small">Create new account</a>
                   </div>
                 </form>
+
+
               </div>
               <ul class="auth-footer">
                 <li>
@@ -78,7 +82,7 @@
                   <a href="#">Terms</a>
                 </li>
               </ul>
-              <p class="footer-text text-center">copyright © 2018 Bootstrapdash. All rights reserved.</p>
+              <p class="footer-text text-center">copyright © 201wqeqwewqewq Bootstrapdash. All rights reserved.</p>
             </div>
           </div>
         </div>

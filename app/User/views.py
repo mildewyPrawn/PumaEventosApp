@@ -19,36 +19,16 @@ def Index(request):
     context = {}
     return render(request, template, context)
 
-class SingUpView(CreateView):
-    model = Usuario
-    form = SingUpForm
-    def form_valid(self, form):
-        #Envio de correo aun no implementado
-        return redirect('/')
 
-#Login que si hace algo.
-class SignInView(LoginView):
-    #template_name = 'User/registration/login.html'
-    template = 'User/registration/login.html'
-    def get(self, request):
-        form = SingInForm()
-        return render(request, self.template)
 
-    def post(self, request):
-        """
-            Validates and do the login
-        """
-        form = SingInForm(request.POST)
-        if form.is_valid():
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user is not None:
-                login(request, user)
-                if request.GET.get("next", None) is not None:
-                    return redirect(request.GET.get("next"))
-                return redirect('/')
 
-        #self.context['form'] = form
-        return render(request, self.template)
+
+
+
+
+
+
+
 
 
 
@@ -68,8 +48,24 @@ def Events(request):
     """
     print(request.method)
     template = 'User/events/home.html'
-    context = {}
+    user = request.user.get_username()
+    print("...............................")
+    print(user)
+    print("...............................")
+    context = {'user':user}
     return render(request, template, context)
+
+
+
+def logout_request(request):
+    template = 'User/general/index.html'
+    context ={}
+    logout(request)
+    return render(request,template,context)
+
+
+
+
 
 class About(View):
     """
