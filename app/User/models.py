@@ -14,5 +14,11 @@ class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, default=1)
     avatar = models.ImageField(upload_to='images/', blank=True, null=True)
 
+    #def create_user_Usuario(self, user1, avatar):
+    #    user = self.model(user=user1, avatar=avatar)
+    #    user.save(using=self._db)
+    #    return user
+
+
 class EntidadAcademica(models.Model):
     nombre = models.CharField(max_length=255)

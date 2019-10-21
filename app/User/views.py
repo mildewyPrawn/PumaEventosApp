@@ -6,12 +6,14 @@ from django.views import View
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.views import LoginView
 from .utils import IsNotAuthenticatedMixin
-
+from django.contrib import messages
 from .models import Usuario
+from django.http import HttpResponseRedirect
 from .forms import SingUpForm, SingInForm, CreateUrs
 # from Post.models import Post
 # from Home.forms import LoginForm
 # Function Views
+
 def Index(request):
     """
         Index in my Web Page.
@@ -36,8 +38,19 @@ class SingUpView(CreateView):
 
     def post(self, request):
         form = CreateUrs(request.POST, request.FILES)
-        #form2 = SingUpForm(request.POST)
-        
+        if form.is_valid():
+            user = form.save(commit=False)
+            
+            #user2 = Usuario.create_user_Usuario(user, form.clean_avatar)
+            user.is_active = False
+            user.save()
+            user2 = Usuario(user=user, avatar=form.clean_avatar())
+            user2.save()
+            print(user)
+            #messages.info(request, 'Your password has been changed successfully!')
+            #return HttpResponseRedirect("/")
+            #return redirect('/home/')
+        print(form.errors)
         return render(request, self.template)
 
 
@@ -45,13 +58,12 @@ class SingUpView(CreateView):
     #    return redirect('/')
 
 #Login que si hace algo.
-class SignInView(IsNotAuthenticatedMixin, View):
+class SignInView( View):
     #template_name = 'User/registration/login.html'
     template = 'User/registration/login.html'
     def get(self, request):
         form = SingInForm()
-        if request.user.is_authenticated():
-            return redirect('/home/')
+        
         return render(request, self.template)
 
     def post(self, request):
@@ -65,10 +77,11 @@ class SignInView(IsNotAuthenticatedMixin, View):
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                #if request.GET.get("next", None) is not None:
-                #    return redirect(request.GET.get("next"))
+                if request.GET.get("next", None) is not None:
+                    return redirect(request.GET.get("next"))
                 return redirect('/home/')
-
+            #messages.add_message(request, messages.INFO, 'Hello world.')
+            return render(request, self.template)
         #self.context['form'] = form
         return render(request, self.template)
 
