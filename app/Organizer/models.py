@@ -1,7 +1,7 @@
 import django
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as UserDjango
 from User.models import User
 from compositefk.fields import CompositeForeignKey, LocalFieldValue
 
@@ -22,7 +22,7 @@ class Evento(models.Model):
     horario_fin = models.TimeField()
     capacidad = models.IntegerField()
     etiqueta = models.ManyToManyField(Etiqueta)
-    organizador = models.OneToOneField(User, on_delete=models.CASCADE, parent_link=True)
+    organizador = models.OneToOneField(User, on_delete=models.CASCADE)
     #periodicidad =
 
 
