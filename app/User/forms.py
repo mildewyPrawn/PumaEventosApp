@@ -22,4 +22,4 @@ class SingUpForm(UserCreationForm):
                   'email',
                   'user',
                   'avatar',
-                  'password']
+                  'password'] 
