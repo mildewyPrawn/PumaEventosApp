@@ -1,0 +1,2 @@
+def eventsForm(request):
+	pass
