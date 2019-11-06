@@ -1,18 +1,18 @@
 from django.shortcuts import render,redirect
 from .models import Evento
-from .forms import eventsForm
+from .forms import EventosForm
 
 # Create your views here.
 
 
 def listMyEvents(request):
-	events=Evento.objects.all()
-	return render(request,'myEvents.html',{'events':events})
+	eventos=Evento.objects.all()
+	return render(request,'myEvents.html',{'eventos':eventos})
 
 
 
 def createEvent(request):
-	form = EventoForm(request.Post or None)
+	form = EventosForm(request.POST or None)
 
 	if form.is_valid():
 		form.save()
@@ -21,18 +21,23 @@ def createEvent(request):
 	return render(request,'eventsForm.html',{'form':form})
 
 
-def updateEvent(request):
-	event = Evento.objects.get(id=id)
-	form = EventoForm(request.Post or None, instance=event)
+def updateEvent(request, id):
+	evento = Evento.objects.get(id=id)
+	form = EventosForm(request.POST or None, instance=evento)
 
 	if form.is_valid():
 		form.save()
 		return redirect('listMyEvents')
 
-	return render(request,'eventsForm.html',{'form':form})
+	return render(request,'eventsForm.html',{'form':form, 'evento':evento})
 
 
-def deleteEvent(request):
+def deleteEvent(request, id):
+	evento = Evento.objects.get(id=id)
+	if request.method == 'POST':
+		evento.delete()
+		return redirect('listMyEvents')
 
-	pass
+	return render(request, 'prod_delete-confirm.html',{'evento':evento})
+
 
