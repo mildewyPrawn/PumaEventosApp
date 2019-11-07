@@ -57,7 +57,7 @@ class SignInView(View):
                 login(request, user)
                 if request.GET.get("next", None) is not None:
                     return redirect(request.GET.get("next"))
-                return redirect('../events')
+                return redirect('../eventos')
             #messages.add_message(request, messages.INFO, 'Hello world.')
             return render(request, self.template)
         #self.context['form'] = form
@@ -75,7 +75,7 @@ def Register(request):
 class Eventos(LoginRequiredMixin, CreateView):
     def get(self, request):
         print(request.method)
-        template = 'User/events/home.html'
+        template = 'User/eventos/home.html'
         user = request.user.get_username()
         print("...............................")
         print(user)
@@ -83,12 +83,12 @@ class Eventos(LoginRequiredMixin, CreateView):
         context = {'user':user}
         return render(request, template, context)
 
-def Events(request):
+def Eventos(request):
     """
-        Events home Page
+        Eventos home Page
     """
     print(request.method)
-    template = 'User/events/home.html'
+    template = 'User/eventos/home.html'
     user = request.user.get_username()
     print("...............................")
     print(user)
@@ -98,19 +98,19 @@ def Events(request):
 
 
 
-def EventsList(request):
+def EventosList(request):
     """
-        All Events home Page
+        All Eventos home Page
     """
     print(request.method)
-    template = 'User/events/all.html'
+    template = 'User/eventos/all.html'
     user = request.user.get_username()
-    events = Evento.objects.all()
+    eventos = Evento.objects.all()
 
     print("...............................")
     print(user)
     print("...............................")
-    context = {'user':user,'events':events}
+    context = {'user':user,'eventos':eventos}
     return render(request, template, context)
 
 
