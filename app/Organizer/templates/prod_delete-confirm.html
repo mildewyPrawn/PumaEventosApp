@@ -43,6 +43,7 @@
               {% csrf_token %}
               <h2>Estas seguro de querer eliminar el evento {{evento.nombre}} ?</h2>
               <button type="submit">Confirmar</button>
+              <button onclick="goBack()">Cancelar </button>
             </form>
             
         <!-- AQUI Termina el codigo base!! -->
@@ -73,6 +74,12 @@
     <script src="../../../static/js/shared/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
+    <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
     <!-- End custom js for this page-->
   </body>
+
 </html>
