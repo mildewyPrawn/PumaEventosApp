@@ -37,33 +37,13 @@
         <!-- AQUI va el codigo base!! -->
 
         <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="card">
-            <div class="card-body">
-              
-              <h4>Lista de eventos</h4>
-              <lo>
-               <dl> 
-              {% for evento in eventos%}
+          <div class="content-wrapper"> 
 
-                    <li><h5>Nombre :</h5>{{evento.nombre}} <br>
-                    <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
-                    <h5>Fecha Inicio : {{evento.fecha_inicio}}</h5>
-                    <h5>Fecha Fin : {{evento.fecha_fin}}</h5>
-                    <h5>Direccion : {{evento.direccion}}</h5>
-                    <h5>Capacidad : {{evento.capacidad}}</h5>
-
-                    <a href="{% url 'updateEvent' evento.id % }">Editar Evento</a>
-                </li>
-                <hr>
-
-              {% endfor %}
-              </dl>
-                <a href="{% url 'createEvent' %}">New Event</a>
-              </lo>
-            </div>
-            </div>
-
+            <form method="POST">
+              {% csrf_token %}
+              <h2>Estas seguro de querer eliminar el evento {{evento.nombre}} ?</h2>
+              <button type="submit">Confirmar</button>
+            </form>
             
         <!-- AQUI Termina el codigo base!! -->
 
