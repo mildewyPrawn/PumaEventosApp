@@ -9,6 +9,9 @@ def listMyEvents(request):
 	eventos=Evento.objects.all()
 	return render(request,'myEvents.html',{'eventos':eventos})
 
+def seeEvent(request,id):
+	evento = Evento.objects.get(id=id)
+	return render(request,'verEvento.html',{'evento':evento})
 
 
 def createEvent(request):
