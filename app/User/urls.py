@@ -25,10 +25,10 @@ urlpatterns = [
 
     path('',Index, name='index'),
     path('home/',Index, name='index'),
-    path('about/',About, name='about'),
-    path('login/',SignInView, name='login'),
+    path('about/', views.About.as_view(), name='about'),
+    path('login/', views.SignInView.as_view(), name='login'),
     # path('login/register.html/',Register, name='register'), # no sé si sirva
-    path('register/',Register, name='register'),
+    path('register/', views.Register, name='register'),
     path('eventos/',Eventos, name='eventos'),
     path('eventos/index.html/',Eventos, name='eventos'),
     path('eventos/index/',Eventos, name='eventos'),
