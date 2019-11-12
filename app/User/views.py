@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import CreateView, TemplateView
@@ -10,7 +11,7 @@ from django.contrib import messages
 from .models import Usuario
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from .forms import SingUpForm, SingInForm, CreateUrs
+from .forms import CreaOrganizador, SingInForm, CreateUrs
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -38,6 +39,8 @@ class HomeView(LoginRequiredMixin, CreateView):
 class SingUpView(CreateView):
     #model = Usuario
     template = 'User/registration/register.html'
+    context = {}
+
     def get(self, request):
         form = CreateUrs()
         #form2 = SingUpForm()
@@ -51,10 +54,17 @@ class SingUpView(CreateView):
             #user2 = Usuario.create_user_Usuario(user, form.clean_avatar)
             user.is_active = False
             user.save()
-            user2 = Usuario(user=user, avatar=form.clean_avatar())
+            user2 = Usuario(
+                user=user, 
+                avatar=form.clean_avatar()
+            )
             user2.save()
-            print(user)
+            #print(user)
             current_site = get_current_site(request)
+            """
+            if condicion:
+                form.add.errors(field, error)
+            """
             mail_subject = 'Activate your PumaEventos account.'
             message = render_to_string('acc_active_email.html', {
                 'user': user,
@@ -69,7 +79,7 @@ class SingUpView(CreateView):
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
         else:
-            form = CreateUrs()
+            self.context['form'] = form
         print(form.errors, "asdads")
         return render(request, self.template, {'form': form})
             #messages.info(request, 'Your password has been changed successfully!')
@@ -95,13 +105,24 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 
+class RegistroOrganizador(LoginRequiredMixin, View):
+    template = "User/registration/registrOrgnz.html"
+    context = {}
+    
+    def get(self, request):
+        if request.user.is_superuser:
+            return render(request, self.template, self.context)
+        return redirect('/home/')
+
+    def post(self, request):
+        return redirect('/home/')  
+
 #Login que si hace algo.
 class SignInView( View):
     #template_name = 'User/registration/login.html'
     template = 'User/registration/login.html'
     def get(self, request):
         form = SingInForm()
-        
         return render(request, self.template)
 
     def post(self, request):

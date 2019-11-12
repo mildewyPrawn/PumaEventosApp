@@ -19,10 +19,8 @@ class CreateUrs(UserCreationForm):
     #        field.required = True
 
     class Meta:
-        
         model = User
         fields = (
-            'username',
             'first_name',
             'last_name',
             'email',
@@ -30,6 +28,7 @@ class CreateUrs(UserCreationForm):
             'password2',
             #'avatar',
         )
+
     def clean_email(self):
         email = self.cleaned_data['email']
         if not email.endswith('unam.mx'):
@@ -63,7 +62,7 @@ class CreateUrs(UserCreationForm):
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password2')
         #avatar = self.clean_avatar()
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+        user = User.objects.create_user(username=email, first_name=first_name, last_name=last_name,
                                         email=email, password=password)
         #user.is_active = False
         #user1 = Usuario.create_user_Usuario(user, avatar)
@@ -76,18 +75,16 @@ class CreateUrs(UserCreationForm):
         return user
 
 
-class SingUpForm(UserCreationForm):
-    #email = forms.EmailField(max_length=200, help_text='Required', required=True)
-
-    avatar = forms.ImageField(required=False)
-    email = forms.EmailField(max_length=200, help_text='Required')
+class CreaOrganizador(UserCreationForm):
+    #email = forms.EmailField(max_length=200, help_text='Required', required=True
+    #avatar = forms.ImageField(required=False)
+    #email = forms.EmailField(max_length=200, help_text='Required'perla)
+    
     class Meta:
-        #password = forms.CharField(widget=forms.PasswordInput)
-        model = Usuario
+        model = User
         fields = (
-            #'user__username',
-            'avatar',
-            'email',
+            'password1',
+            'password2',
         )
     
     def clean_email(self):
@@ -96,18 +93,4 @@ class SingUpForm(UserCreationForm):
             raise ValidationError('El dominio no es valido.')
         return email
     
-    def clean_avatar(self):
-        avatar = self.cleaned_data['avatar']
-        try:
-            w, h = get_image_dimensions(avatar)
-            if w > 500 or h > 500:
-                raise ValidationError(u'Please use an image that is '
-                     '%s x %s pixels or smaller.' % (100, 100))
-        except AttributeError:
-            """
-            Handles case when we are updating the user profile
-            and do not supply a new avatar
-            """
-            pass
-        return avatar
 

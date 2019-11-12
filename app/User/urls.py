@@ -17,6 +17,7 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate, name='activate'),
+    path('register/Organizador', views.RegistroOrganizador.as_view(), name='registroOrg')
     #url(r'abhsda', views.)
     # path('about/', views.About.as_view(), name='about'),
     # path('login/', views.Login.as_view(), name='login'),

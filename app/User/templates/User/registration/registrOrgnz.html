@@ -104,66 +104,7 @@
                     {% endfor %}
                     {% endif %}
                   </div>
-                  <div class="form-group">
-                    <label class="label">Contraseña</label>
-                    <div class="input-group">
-                      <input type="password" class="form-control" name="password1" placeholder="Password">
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                        </span>
-                      </div>
-                    </div>
-                    {% if form.password1.errors %}
-                    {% for error in form.password1.errors %}
-                    <div class="input-error">
-                        {{ error }}
-                    </div>
-                    {% endfor %}
-                    {% endif %}
-                  </div>
-                  <div class="form-group">
-                    <label class="label">Confirmar contraseña</label>
-                    <div class="input-group">
-                      <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                        </span>
-                      </div>
-                    </div>
-                    {% if form.password2.errors %}
-                    {% for error in form.password2.errors %}
-                    <div class="input-error">
-                        {{ error }}
-                    </div>
-                    {% endfor %}
-                    {% endif %}
-                  </div>
-                  <label class="label">Avatar(opcional)</label>
-                  {% if form.avatar.value %}
-                  <div class="form-group">
-                    <div class="input-group">
-                      <input type="file" class="form-control-file" name="avatar" value="{{ form.avatar.value }}">
-                      <!--<div class="input-group-append">
-                        <span class="input-group-text">
-                        <i class="mdi mdi-check-circle-outline"></i>
-                        </span>
-                      </div>-->
-                    </div>
-                  </div>
-                  {% else %}
-                  <div class="form-group">
-                      <div class="input-group">
-                        <input type="file" class="form-control-file" name="avatar">
-                        <!--<div class="input-group-append">
-                          <span class="input-group-text">
-                          <i class="mdi mdi-check-circle-outline"></i>
-                          </span>
-                        </div>-->
-                      </div>
-                    </div>
-                  {% endif %}
+                  
                   <!-- if form.email.value //checha si hay un valor ya dado y lo regresa, mantiene los datos
                   value={{ form.email.value }}
 
