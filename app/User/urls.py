@@ -1,8 +1,9 @@
-from django.urls import path
-from django.urls import include, path
-from django.contrib import admin
 from . import views
 from .views import *
+from django.conf.urls import url, include
+from django.contrib import admin
+from django.urls import include, path
+from django.urls import path
 
 app_name = 'User'
 urlpatterns = [
@@ -27,26 +28,18 @@ urlpatterns = [
     path('home/',Index, name='index'),
     path('about/', views.About.as_view(), name='about'),
     path('login/', views.SignInView.as_view(), name='login'),
-    # path('login/register.html/',Register, name='register'), # no sé si sirva
-    path('register/', views.Register, name='register'),
     path('eventos/',Eventos, name='eventos'),
+    path('eventos/all',EventosList, name='eventosList'),
+    path('eventos/home',Eventos, name='eventosHome'),
+    path('eventos/home.html',Eventos, name='eventosHome'),
     path('eventos/index.html/',Eventos, name='eventos'),
     path('eventos/index/',Eventos, name='eventos'),
-    path('eventos/home.html',Eventos, name='eventosHome'),
-    path('eventos/home',Eventos, name='eventosHome'),
-    #path('Evento/see/<int:id>/',seeEvent,name='seeEvent'),
-
-    path('eventos/all',EventosList, name='eventosList'),
-    path("logout",logout_request, name="logout"),
-
     path("error505",error505, name="error505"),
-
-
-    #path('login/',SignInView, name='login'),
-    #path('home/login/', views.SignInView.as_view(), name='login'),
-    #path('login/register.html/', views.Register, name='register'),
-    #path('register/', views.Register, name='register2'),
-    # path('about/', views.About.as_view(), name='about'),
-    # path('login/', views.Login.as_view(), name='login'),
-    # path('logout/', views.Logout.as_view(), name='logout'),
+    path('home/', views.HomeView.as_view(),name='home'),
+    path('login/register.html/', views.Register, name='register'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('register/', views.SignUpView.as_view(), name='register2'),
+    path('register/Organizador', views.RegistroOrganizador.as_view(),
+         name='registroOrg'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
 ]

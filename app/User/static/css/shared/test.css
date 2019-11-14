@@ -1,0 +1,7 @@
+.input-error {
+    background-color: rgb(209, 48, 40);
+    border-radius: 3px;
+    color: rgba(249, 249, 249, 1);
+    padding: .5em .7em;
+    width: 490px;
+}
