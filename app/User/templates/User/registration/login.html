@@ -27,15 +27,31 @@
                 <form method="post" action="#">
                   {% csrf_token %}
                   <div class="form-group">
-                    <label class="label">Email</label>
+                    <label class="label">Email</label>                    
+                    {% if form.username.value %}
                     <div class="input-group">
-                      <input type="text" class="form-control" name="username" placeholder="Email" required>
+                      <input type="email" class="form-control" name="username" value="{{ form.usermane.value }}" placeholder="Email">
                       <div class="input-group-append">
                         <span class="input-group-text">
-                          <i class="mdi mdi-check-circle-outline"></i>
                         </span>
                       </div>
                     </div>
+                    {% else %}
+                    <div class="input-group">
+                      <input type="email" class="form-control" name="username" placeholder="Email">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                        </span>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                    <div class="input-error">
+                      {{ error }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
                   </div>
                   <div class="form-group">
                     <label class="label">Contraseña</label>

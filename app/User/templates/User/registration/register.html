@@ -44,13 +44,13 @@
                     </div>
                     {% else %}
                     <div class="input-group">
-                        <input type="text" class="form-control" name="first_name" placeholder="Nombre">
-                        <div class="input-group-append">
-                          <span class="input-group-text">
-                            <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                          </span>
-                        </div>
+                      <input type="text" class="form-control" name="first_name" placeholder="Nombre">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
+                        </span>
                       </div>
+                    </div>
                     {% endif %}
                   </div>
                   <div class="form-group">
@@ -66,13 +66,13 @@
                     </div>
                     {% else %}
                     <div class="input-group">
-                        <input type="text" class="form-control" name="last_name" placeholder="Apellidos">
-                        <div class="input-group-append">
-                          <span class="input-group-text">
-                            <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                          </span>
-                        </div>
+                      <input type="text" class="form-control" name="last_name" placeholder="Apellidos">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
+                        </span>
                       </div>
+                    </div>
                     {% endif %}
                   </div>
                   <div class="form-group">
@@ -88,18 +88,18 @@
                     </div>
                     {% else %}
                     <div class="input-group">
-                        <input type="email" class="form-control" name="email" placeholder="Email">
-                        <div class="input-group-append">
-                          <span class="input-group-text">
-                            <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                          </span>
-                        </div>
+                      <input type="email" class="form-control" name="email" placeholder="Email">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
+                        </span>
                       </div>
+                    </div>
                     {% endif %}
                     {% if form.email.errors %}
                     {% for error in form.email.errors %}
                     <div class="input-error">
-                        {{ error }}
+                      {{ error }}
                     </div>
                     {% endfor %}
                     {% endif %}
@@ -117,7 +117,7 @@
                     {% if form.password1.errors %}
                     {% for error in form.password1.errors %}
                     <div class="input-error">
-                        {{ error }}
+                      {{ error }}
                     </div>
                     {% endfor %}
                     {% endif %}
@@ -135,7 +135,7 @@
                     {% if form.password2.errors %}
                     {% for error in form.password2.errors %}
                     <div class="input-error">
-                        {{ error }}
+                      {{ error }}
                     </div>
                     {% endfor %}
                     {% endif %}
@@ -146,33 +146,33 @@
                     <div class="input-group">
                       <input type="file" class="form-control-file" name="avatar" value="{{ form.avatar.value }}">
                       <!--<div class="input-group-append">
-                        <span class="input-group-text">
-                        <i class="mdi mdi-check-circle-outline"></i>
-                        </span>
+                          <span class="input-group-text">
+                            <i class="mdi mdi-check-circle-outline"></i>
+                          </span>
                       </div>-->
                     </div>
                   </div>
                   {% else %}
                   <div class="form-group">
-                      <div class="input-group">
-                        <input type="file" class="form-control-file" name="avatar">
-                        <!--<div class="input-group-append">
+                    <div class="input-group">
+                      <input type="file" class="form-control-file" name="avatar">
+                      <!--<div class="input-group-append">
                           <span class="input-group-text">
-                          <i class="mdi mdi-check-circle-outline"></i>
+                            <i class="mdi mdi-check-circle-outline"></i>
                           </span>
-                        </div>-->
-                      </div>
+                      </div>-->
                     </div>
+                  </div>
                   {% endif %}
                   <!-- if form.email.value //checha si hay un valor ya dado y lo regresa, mantiene los datos
-                  value={{ form.email.value }}
-                  {% if form.email.errors %}
-                  {% for error in form. %}
-                  div class email-errors>
-                  {{error}}
-                  {% endfor %}
-                  {% endif %}
-                  -->
+                       value={{ form.email.value }}
+                       {% if form.email.errors %}
+                       {% for error in form. %}
+                       div class email-errors>
+                       {{error}}
+                       {% endfor %}
+                       {% endif %}
+                    -->
                   <div class="form-group">
                     <button class="btn btn-primary submit-btn btn-block">Confirmar</button>
                   </div>

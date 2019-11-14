@@ -154,11 +154,13 @@ class SignInView( View):
                 login(request, user)
                 if request.GET.get("next", None) is not None:
                     return redirect(request.GET.get("next"))
-                return redirect('/home/')
+                return redirect('/eventos/')
             #messages.add_message(request, messages.INFO, 'Hello world.')
-            return render(request, self.template)
+            return render(request, self.template, {'form': form})
+        # return render(request, self.template)
         #self.context['form'] = form
-        return render(request, self.template)
+        return render(request, self.template, {'form': form})
+        # return render(request, self.template)
 
 class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
