@@ -180,12 +180,13 @@ class Eventos(LoginRequiredMixin, CreateView):
     def get(self, request):
         print(request.method)
         template = 'User/eventos/home.html'
-        user = request.user.get_username()
+        #user = request.user
         print("...............................")
         print(user)
+        #print()
         print("...............................")
-        context = {'user':user}
-        return render(request, template, context)
+        #context = {'user':user}
+        return render(request, template)
 
 def Eventos(request):
     """
@@ -193,9 +194,10 @@ def Eventos(request):
     """
     print(request.method)
     template = 'User/eventos/home.html'
-    user = request.user.get_username()
+    user = request.user
     print("...............................")
     print(user)
+    print(request.user.usuario.avatar.url)
     print("...............................")
     context = {'user':user}
     return render(request, template, context)
