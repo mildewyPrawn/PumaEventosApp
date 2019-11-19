@@ -197,7 +197,7 @@ def Eventos(request):
     user = request.user
     print("...............................")
     print(user)
-    print(request.user.usuario.avatar.url)
+    # print(request.user.usuario.avatar.url)
     print("...............................")
     context = {'user':user}
     return render(request, template, context)
