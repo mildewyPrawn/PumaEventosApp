@@ -37,14 +37,36 @@
         <!-- AQUI va el codigo base!! -->
 
         <div class="main-panel">
-          <div class="content-wrapper"> 
+          <div class="content-wrapper">
+            <div class="card">
+            <div class="card-body">
+              
+              <h4>Lista de Staffs por Evento</h4>
+              <lo>
+               <dl> 
+              {% for evento in eventos%}
 
-            <form method="POST">
-              {% csrf_token %}
-              <h2>Estas seguro de querer eliminar el objeto ?</h2>
-              <button type="submit">Confirmar</button>
-              <button onclick="goBack()">Cancelar </button>
-            </form>
+                    <li><h5>{{evento.nombre}}</h5> <br>
+                    
+                    {% for staff in staffs%}
+                      <h5>Staff :</h5> <dd>{{staff.id}}
+                        <a href="{% url 'deleteStaff' staff.id %}">Delete</a> </dd>
+                      <hr>
+                    {% endfor %}
+
+
+                    <a href="{% url 'seeEvent' evento.id %}">Ver detalles de Evento</a>
+                </li>
+                <hr>
+                <hr>
+
+              {% endfor %}
+              </dl>
+                <a href="{% url 'addStaff' %}">Add Staff</a>
+              </lo>
+            </div>
+            </div>
+
             
         <!-- AQUI Termina el codigo base!! -->
 
@@ -74,12 +96,6 @@
     <script src="../../../static/js/shared/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
-    <script>
-    function goBack() {
-      window.history.back();
-    }
-    </script>
     <!-- End custom js for this page-->
   </body>
-
 </html>

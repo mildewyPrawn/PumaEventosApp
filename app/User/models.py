@@ -10,7 +10,7 @@ class User(models.Model):
     user = models.ForeignKey(UserDjango, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='images/', blank=True, null=True)
     password = models.CharField(max_length=100, null=False)
-    staff = models.BooleanField(null=False, default=False)
+    organizador = models.BooleanField(null=False, default=False)
 
 class AcademicEntity(models.Model):
     nombre = models.CharField(max_length=255)

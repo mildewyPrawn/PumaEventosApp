@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Eventos</title>
+    <title>Mis Staffs</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../../static/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../../static/vendors/iconfonts/puse-icons-feather/feather.css">
@@ -23,35 +23,38 @@
     <link rel="shortcut icon" href="../../../static/images/favicon.png" /> </head>
   <body class="dark-theme sidebar-dark">
     <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
+      <!-- partial:../../partials/_navbar.html -->
       {% include 'partials/_navbar.html' %}
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial:../../partials/_settings-panel.html -->
           {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
-        <!-- partial:partials/_sidebar.html -->
+        <!-- partial:../../partials/_sidebar.html -->
           {% include 'partials/_sidebar.html' %}   
         <!-- partial -->
 
         <!-- AQUI va el codigo base!! -->
-
         <div class="main-panel">
           <div class="content-wrapper"> 
-
-            <form method="POST">
-              {% csrf_token %}
-              <h2>Estas seguro de querer eliminar el objeto ?</h2>
-              <button type="submit">Confirmar</button>
-              <button onclick="goBack()">Cancelar </button>
-            </form>
+            <h1>New/Update Staff</h1>
+              <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Save</button>
+              </form>
+              
+              {% if staff %}
+                <a href="{% url 'deleteStaff' staff.id %}">Delete</a>
+              {% endif %}  
+              
             
         <!-- AQUI Termina el codigo base!! -->
 
 
           </div>
           <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
+          <!-- partial:../../partials/_footer.html -->
             {% include 'partials/_footer.html' %}
           <!-- partial -->
         <!-- main-panel ends -->
@@ -74,12 +77,6 @@
     <script src="../../../static/js/shared/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
-    <script>
-    function goBack() {
-      window.history.back();
-    }
-    </script>
     <!-- End custom js for this page-->
   </body>
-
 </html>

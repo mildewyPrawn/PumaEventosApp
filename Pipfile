@@ -1,0 +1,78 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
+
+[packages.7043af9]
+file = "https://repo.anaconda.com/pkgs/main/linux-64/ca-certificates-2019.8.28-0.tar.bz2"
+
+[packages.2b8a5ce]
+file = "https://conda.anaconda.org/anaconda/linux-64/libgcc-ng-9.1.0-hdf63c60_0.tar.bz2"
+
+[packages.bdf611d]
+file = "https://conda.anaconda.org/anaconda/linux-64/libstdcxx-ng-9.1.0-hdf63c60_0.tar.bz2"
+
+[packages.4181cab]
+file = "https://conda.anaconda.org/anaconda/linux-64/libffi-3.2.1-h4deb6c0_3.tar.bz2"
+
+[packages.145f519]
+file = "https://conda.anaconda.org/anaconda/linux-64/ncurses-6.1-he6710b0_1.tar.bz2"
+
+[packages.0d6768f]
+file = "https://repo.anaconda.com/pkgs/main/linux-64/openssl-1.1.1d-h7b6447c_2.conda"
+
+[packages.b39028b]
+file = "https://conda.anaconda.org/anaconda/linux-64/xz-5.2.4-h14c3975_4.tar.bz2"
+
+[packages.fb65ac8]
+file = "https://conda.anaconda.org/anaconda/linux-64/zlib-1.2.11-h7b6447c_3.tar.bz2"
+
+[packages.a1d12bc]
+file = "https://conda.anaconda.org/anaconda/linux-64/libedit-3.1.20181209-hc058e9b_0.tar.bz2"
+
+[packages.4f26efc]
+file = "https://conda.anaconda.org/anaconda/linux-64/readline-7.0-h7b6447c_5.tar.bz2"
+
+[packages.38b1b69]
+file = "https://conda.anaconda.org/anaconda/linux-64/tk-8.6.8-hbc83047_0.tar.bz2"
+
+[packages.b465c40]
+file = "https://repo.anaconda.com/pkgs/main/linux-64/krb5-1.16.1-h173b8e3_7.conda"
+
+[packages.5e20b8e]
+file = "https://conda.anaconda.org/anaconda/linux-64/sqlite-3.29.0-h7b6447c_0.tar.bz2"
+
+[packages.613751f]
+file = "https://repo.anaconda.com/pkgs/main/linux-64/libpq-11.2-h20c2e04_0.conda"
+
+[packages.f5f7d99]
+file = "https://conda.anaconda.org/anaconda/linux-64/python-3.7.4-h265db76_1.tar.bz2"
+
+[packages.b60c4ce]
+file = "https://repo.anaconda.com/pkgs/main/linux-64/certifi-2019.9.11-py37_0.tar.bz2"
+
+[packages.f7dbd1a]
+file = "https://repo.anaconda.com/pkgs/main/linux-64/psycopg2-2.8.3-py37h1ba5d50_0.conda"
+
+[packages.7b7bf3c]
+file = "https://conda.anaconda.org/anaconda/noarch/pytz-2019.2-py_0.tar.bz2"
+
+[packages.cb552f7]
+file = "https://conda.anaconda.org/anaconda/noarch/sqlparse-0.3.0-py_0.tar.bz2"
+
+[packages.b19fa9a]
+file = "https://conda.anaconda.org/anaconda/linux-64/django-2.2.5-py37_1.tar.bz2"
+
+[packages.800ac7e]
+file = "https://conda.anaconda.org/anaconda/linux-64/setuptools-41.2.0-py37_0.tar.bz2"
+
+[packages.be34ffd]
+file = "https://conda.anaconda.org/anaconda/linux-64/wheel-0.33.6-py37_0.tar.bz2"
+
+[packages.725de14]
+file = "https://conda.anaconda.org/anaconda/linux-64/pip-19.2.3-py37_0.tar.bz2"

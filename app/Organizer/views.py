@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .models import Evento
-from .forms import EventosForm
+from .models import Evento, Staff
+from .forms import EventosForm, StaffForm
 
 # Create your views here.
 
@@ -42,5 +42,29 @@ def deleteEvent(request, id):
 		return redirect('listMyEvents')
 
 	return render(request, 'prod_delete-confirm.html',{'evento':evento})
+
+
+def addStaff(request):
+	form = StaffForm(request.POST or None)
+
+	if form.is_valid():
+		form.save()
+		return redirect('listStaffs')
+
+	return render(request,'staffForm.html',{'form':form})
+
+def deleteStaff(request, id):
+	staff = Staff.objects.get(id=id)
+	if request.method == 'POST':
+		staff.delete()
+		return redirect('listMyEvents')
+
+	return render(request, 'prod_delete-confirm.html',{'staff':staff})
+
+
+def listStaffs(request):
+	eventos=Evento.objects.all()
+	staffs=Staff.objects.all()
+	return render(request,'myStaffs.html',{'eventos':eventos, 'staffs':staffs})
 
 

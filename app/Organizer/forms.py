@@ -1,5 +1,5 @@
 from django import forms
-from .models import Evento
+from .models import Evento,Staff
 
 
 
@@ -11,4 +11,7 @@ class EventosForm(forms.ModelForm):
 				'etiqueta','organizador']
 		
 
-		
+class StaffForm(forms.ModelForm):
+	class Meta:
+		model = Staff
+		fields =['user_id','evento_id']		
