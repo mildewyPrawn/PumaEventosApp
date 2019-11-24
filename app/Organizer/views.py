@@ -1,8 +1,28 @@
 from django.shortcuts import render,redirect
-from .models import Evento, Staff
-from .forms import EventosForm, StaffForm
+from .models import Evento, Staff, Invitacion
+from .forms import EventosForm, StaffForm, InvitacionesForm
 
 # Create your views here.
+
+
+def nuevaInvitacion(request):
+	form = InvitacionesForm(request.POST or None)
+
+	if form.is_valid():
+		form.save()
+		return redirect('Invitaciones')
+
+	return render(request,'invitacionesForm.html',{'form':form})
+
+def Invitaciones(request,evento_id):
+	evento = Evento.objects.all()
+	invitaciones= Invitacion.objects.all()
+	return render(request,'invitaciones.html',{'invitaciones':invitaciones})
+
+
+##########################################################################
+#Events Stuff
+##########################################################################
 
 
 def listMyEvents(request):
@@ -33,7 +53,7 @@ def updateEvent(request, id):
 		return redirect('listMyEvents')
 
 	return render(request,'eventsForm.html',{'form':form, 'evento':evento})
-
+EventosForm
 
 def deleteEvent(request, id):
 	evento = Evento.objects.get(id=id)
@@ -43,6 +63,10 @@ def deleteEvent(request, id):
 
 	return render(request, 'prod_delete-confirm.html',{'evento':evento})
 
+
+##########################################################################
+#Staff Stuff
+##########################################################################
 
 def addStaff(request):
 	form = StaffForm(request.POST or None)

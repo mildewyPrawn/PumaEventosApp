@@ -26,6 +26,9 @@ urlpatterns = [
     path('Evento/see/<int:id>/',seeEvent,name='seeEvent'),
     path('Evento/delete/<int:id>/',deleteEvent,name='deleteEvent'),
 
+    path('Evento/Invitacion/new', nuevaInvitacion, name='nuevaInvitacion'),
+    path('Evento/Invitacion/<int:evento_id>/all', Invitaciones, name='Invitaciones'),
+
     ######## STAFF ########
     path('MisStaffs/new', addStaff, name='addStaff'),
     path('MisStaffs/listStaffs', listStaffs, name='listStaffs'),
