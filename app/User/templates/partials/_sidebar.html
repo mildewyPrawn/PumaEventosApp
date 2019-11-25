@@ -5,8 +5,15 @@
     <li class="nav-item nav-profile">
       <div class="nav-link">
         <div class="user-wrapper">
+          {% if user.avatar == null or user.avatar == "" %}
           <div class="profile-image">
-            <img src="/../../../static/images/faces/face8.jpg" alt="profile image"> </div>
+            <img src="/../../../static/images/faces/perrito.jpg" alt="profile image">
+          </div>
+            {% else %}
+            <div class="profile-image">
+              <img src="/../../../static/images/faces/face1.jpg" alt="profile image">
+            </div>
+            {% endif %}
           <div class="text-wrapper">
             <p class="profile-name">{{ user }}</p>
           </div>
