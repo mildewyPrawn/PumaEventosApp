@@ -19,20 +19,11 @@ from django.urls import include, path
 from .views import *
 
 urlpatterns = [
-<<<<<<< HEAD
     path('eventos/misEventos', listMyEvents,name='listMyEvents'),
     path('eventos/new', createEvent, name='createEvent'),
     path('eventos/update/<int:id>/',updateEvent,name='updateEvent'),
     path('eventos/see/<int:id>/',seeEvent,name='seeEvent'),
     path('eventos/delete/<int:id>/',deleteEvent,name='deleteEvent'),
-=======
-    ######## EVENTO ########
-    path('Evento/misEventos', listMyEvents,name='listMyEvents'),
-    path('Evento/new', createEvent, name='createEvent'),
-    path('Evento/update/<int:id>/',updateEvent,name='updateEvent'),
-    path('Evento/see/<int:id>/',seeEvent,name='seeEvent'),
-    path('Evento/delete/<int:id>/',deleteEvent,name='deleteEvent'),
->>>>>>> 6d07c76eb2be07748ee1f6eba56a692c67591e16
 
     path('Evento/Invitacion/new', nuevaInvitacion, name='nuevaInvitacion'),
     path('Evento/Invitacion/<int:evento_id>/all', Invitaciones, name='Invitaciones'),
