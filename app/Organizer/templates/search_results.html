@@ -1,0 +1,11 @@
+<h1>Search Results</h1>
+
+<ul>
+  {% for evento in object_list %}
+  <li><h5>Nombre :</h5>{{evento.nombre}} <br>
+    <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
+    
+    <a href="{% url 'seeEvent' evento.id %}">Ver detalles de Evento</a>
+  </li>
+  {% endfor %}
+</ul>

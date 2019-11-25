@@ -33,5 +33,6 @@ urlpatterns = [
     path('MisStaffs/listStaffs', listStaffs, name='listStaffs'),
     path('MisStaffs/delete/<int:id>/',deleteStaff,name='deleteStaff'),
 
-
+    ######## EVENTS SEARCH ########
+    path('search/', SearchEventsView.as_view(), name='search_results'),
 ]

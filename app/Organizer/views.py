@@ -1,6 +1,8 @@
-from django.shortcuts import render,redirect
-from .models import Evento, Staff, Invitacion
 from .forms import EventosForm, StaffForm, InvitacionesForm
+from .models import Evento, Staff, Invitacion
+from django.db.models import Q
+from django.shortcuts import render,redirect
+from django.views.generic import TemplateView, ListView
 
 # Create your views here.
 
@@ -62,6 +64,21 @@ def deleteEvent(request, id):
 		return redirect('listMyEvents')
 
 	return render(request, 'prod_delete-confirm.html',{'evento':evento})
+
+
+
+class SearchEventsView(ListView):
+        model = Evento
+        template_name = 'search_results.html'
+
+        def get_queryset(self): # new
+                query = self.request.GET.get('q')
+                object_list = Evento.objects.filter(
+                        Q(nombre__icontains=query) |
+                        Q(descripcion__icontains=query) |
+                        Q(direccion__icontains=query)
+                )
+                return object_list
 
 
 ##########################################################################
