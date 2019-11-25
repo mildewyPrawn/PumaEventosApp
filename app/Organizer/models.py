@@ -3,7 +3,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User as UserDjango
 from User.models import User
-from compositefk.fields import CompositeForeignKey, LocalFieldValue
+#from compositefk.fields import CompositeForeignKey, LocalFieldValue
 
 # Create your models here.
 

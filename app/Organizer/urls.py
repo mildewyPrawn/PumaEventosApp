@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.urls import path
 from django.urls import include, path
-from .views import listMyEvents,createEvent,updateEvent,deleteEvent,seeEvent
+from .views import listMyEvents,createEvent,updateEvent,deleteEvent,seeEvent,buscarEventos
 
 urlpatterns = [
     path('eventos/misEventos', listMyEvents,name='listMyEvents'),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('eventos/update/<int:id>/',updateEvent,name='updateEvent'),
     path('eventos/see/<int:id>/',seeEvent,name='seeEvent'),
     path('eventos/delete/<int:id>/',deleteEvent,name='deleteEvent'),
-
+    #agregar url
+    path('eventos/buscarEventos', buscarEventos, name='buscarEventos'),
 ]

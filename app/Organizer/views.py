@@ -1,7 +1,7 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,render_to_response
 from .models import Evento
 from .forms import EventosForm
-
+from django.db.models import Q
 # Create your views here.
 
 
@@ -43,4 +43,20 @@ def deleteEvent(request, id):
 
 	return render(request, 'prod_delete-confirm.html',{'evento':evento})
 
-
+#Busca los eventos.
+def buscarEventos(request):
+	query = request.GET.get('q','')
+	if query:
+		qset = (
+			Q(nombre = query) |
+			Q(descripcion = query) |
+			Q(etiqueta = query)
+		)
+		resultado = Evento.objects.filter(qset).distinct()
+	else:
+		resultado = []
+		return render_to_response("buscarEventos.html",{
+			"resultado": resultado,
+			"query": query,
+			})
+	return render(request,'buscarEventos.html',{'evento':evento})
