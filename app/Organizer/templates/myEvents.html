@@ -28,10 +28,10 @@
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_settings-panel.html -->
-          {% include 'partials/_settings-panel.html' %}
+        {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
-          {% include 'partials/_sidebar.html' %}   
+        {% include 'partials/_sidebar.html' %}   
         <!-- partial -->
 
         <!-- AQUI va el codigo base!! -->
@@ -39,39 +39,39 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="card">
-            <div class="card-body">
-              
-              <h4>Lista de eventos</h4>
-              <lo>
-               <dl> 
-              {% for evento in eventos%}
+              <div class="card-body">
+                
+                <h4>Lista de eventos</h4>
+                <lo>
+                  <dl> 
+                    {% for evento in eventos%}
 
                     <li><h5>Nombre :</h5>{{evento.nombre}} <br>
-                    <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
+                      <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
 
-                    <a href="{% url 'seeEvent' evento.id %}">Ver detalles de Evento</a>
-                </li>
-                <hr>
+                      <a href="{% url 'seeEvent' evento.id %}">Ver detalles de Evento</a>
+                    </li>
+                    <hr>
 
-              {% endfor %}
-              </dl>
-                <a href="{% url 'createEvent' %}">New Event</a>
-              </lo>
-            </div>
+                    {% endfor %}
+                  </dl>
+                  <a href="{% url 'createEvent' %}">New Event</a>
+                </lo>
+              </div>
             </div>
 
             
-        <!-- AQUI Termina el codigo base!! -->
+            <!-- AQUI Termina el codigo base!! -->
 
 
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-            {% include 'partials/_footer.html' %}
+          {% include 'partials/_footer.html' %}
           <!-- partial -->
-        <!-- main-panel ends -->
+          <!-- main-panel ends -->
         </div>
-      <!-- page-body-wrapper ends -->
+        <!-- page-body-wrapper ends -->
       </div>
     </div>
     <!-- container-scroller -->
