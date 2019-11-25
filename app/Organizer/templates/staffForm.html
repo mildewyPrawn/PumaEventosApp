@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Eventos</title>
+    <title>Mis Staffs</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../../static/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../../static/vendors/iconfonts/puse-icons-feather/feather.css">
@@ -23,53 +23,38 @@
     <link rel="shortcut icon" href="../../../static/images/favicon.png" /> </head>
   <body class="dark-theme sidebar-dark">
     <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
+      <!-- partial:../../partials/_navbar.html -->
       {% include 'partials/_navbar.html' %}
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_settings-panel.html -->
+        <!-- partial:../../partials/_settings-panel.html -->
           {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
-        <!-- partial:partials/_sidebar.html -->
+        <!-- partial:../../partials/_sidebar.html -->
           {% include 'partials/_sidebar.html' %}   
         <!-- partial -->
 
         <!-- AQUI va el codigo base!! -->
-
         <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="card">
-            <div class="card-body">
+          <div class="content-wrapper"> 
+            <h1>New/Update Staff</h1>
+              <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Save</button>
+              </form>
               
-              <h4>Lista de eventos</h4>
-              <lo>
-               <dl> 
-                  <li><h5>Nombre :</h5>{{evento.nombre}} <br>
-                  <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
-                  <h5>Fecha Inicio : {{evento.fecha_inicio}}</h5>
-                  <h5>Fecha Fin : {{evento.fecha_fin}}</h5>
-                  <h5>Direccion : {{evento.direccion}}</h5>
-                  <h5>Capacidad : {{evento.capacidad}}</h5>
-                  
-                  <a href="{% url 'Invitaciones' evento.id %}">Ver Invitaciones del Evento</a>
-                  <br>
-
-                  <a href="{% url 'updateEvent' evento.id %}">Editar Evento</a>
-                </li>
-                <hr>
-              </dl>
-                <a href="{% url 'createEvent' %}">New Event</a>
-              </lo>
-            </div>
-            </div>
-
+              {% if staff %}
+                <a href="{% url 'deleteStaff' staff.id %}">Delete</a>
+              {% endif %}  
+              
             
         <!-- AQUI Termina el codigo base!! -->
 
 
           </div>
           <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
+          <!-- partial:../../partials/_footer.html -->
             {% include 'partials/_footer.html' %}
           <!-- partial -->
         <!-- main-panel ends -->

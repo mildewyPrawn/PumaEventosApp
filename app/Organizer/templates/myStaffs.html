@@ -41,24 +41,28 @@
             <div class="card">
             <div class="card-body">
               
-              <h4>Lista de eventos</h4>
+              <h4>Lista de Staffs por Evento</h4>
               <lo>
                <dl> 
-                  <li><h5>Nombre :</h5>{{evento.nombre}} <br>
-                  <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
-                  <h5>Fecha Inicio : {{evento.fecha_inicio}}</h5>
-                  <h5>Fecha Fin : {{evento.fecha_fin}}</h5>
-                  <h5>Direccion : {{evento.direccion}}</h5>
-                  <h5>Capacidad : {{evento.capacidad}}</h5>
-                  
-                  <a href="{% url 'Invitaciones' evento.id %}">Ver Invitaciones del Evento</a>
-                  <br>
+              {% for evento in eventos%}
 
-                  <a href="{% url 'updateEvent' evento.id %}">Editar Evento</a>
+                    <li><h5>{{evento.nombre}}</h5> <br>
+                    
+                    {% for staff in staffs%}
+                      <h5>Staff :</h5> <dd>{{staff.id}}
+                        <a href="{% url 'deleteStaff' staff.id %}">Delete</a> </dd>
+                      <hr>
+                    {% endfor %}
+
+
+                    <a href="{% url 'seeEvent' evento.id %}">Ver detalles de Evento</a>
                 </li>
                 <hr>
+                <hr>
+
+              {% endfor %}
               </dl>
-                <a href="{% url 'createEvent' %}">New Event</a>
+                <a href="{% url 'addStaff' %}">Add Staff</a>
               </lo>
             </div>
             </div>
