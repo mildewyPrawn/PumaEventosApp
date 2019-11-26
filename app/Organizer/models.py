@@ -10,6 +10,9 @@ from User.models import User
 class Etiqueta(models.Model):
     nombre = models.CharField(max_length=255)
 
+    def __str__(self):
+        return str(self.nombre)
+
 
 class Evento(models.Model):
     nombre = models.CharField(max_length=255)
@@ -24,6 +27,9 @@ class Evento(models.Model):
     etiqueta = models.ManyToManyField(Etiqueta)
     organizador = models.ForeignKey(User, on_delete=models.CASCADE)
     #periodicidad =
+
+    def __str__(self):
+        return str(self.nombre) + ': ' + str(self.fecha_inicio)
 
 
 

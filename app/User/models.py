@@ -16,5 +16,11 @@ class Usuario(models.Model):
     password = models.CharField(max_length=100, null=False)
     organizador = models.BooleanField(null=False, default=False)
 
+    def __str__(self):
+        return str(self.user)
+
 class AcademicEntity(models.Model):
     nombre = models.CharField(max_length=255)
+
+    def __str__(self):
+        return str(self.nombre)
