@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,render_to_response
 from .models import Evento
 from .forms import EventosForm
+from django.views.generic import View
 from django.db.models import Q
 # Create your views here.
 
@@ -60,3 +61,15 @@ def buscarEventos(request):
 			"query": query,
 			})
 	return render(request,'buscarEventos.html',{'evento':evento})
+
+class ResultadoView(View):
+    form_class = EventosForm
+    template_name = "buscarEventos.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
