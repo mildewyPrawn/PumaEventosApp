@@ -76,7 +76,9 @@ class SearchEventsView(ListView):
                 object_list = Evento.objects.filter(
                         Q(nombre__icontains=query) |
                         Q(descripcion__icontains=query) |
-                        Q(direccion__icontains=query)
+                        Q(direccion__icontains=query) |
+                        Q(fecha_inicio__icontains=query) | 
+                        Q(etiqueta__nombre__icontains=query)
                 )
                 return object_list
 
