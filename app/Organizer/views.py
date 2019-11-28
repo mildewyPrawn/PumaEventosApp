@@ -21,6 +21,11 @@ def Invitaciones(request,evento_id):
 	invitaciones= Invitacion.objects.all()
 	return render(request,'invitaciones.html',{'invitaciones':invitaciones})
 
+def RegisterEvent(request):
+    template = 'registerEvent.html'
+    context = {}
+    return render(request, template, context)
+
 
 ##########################################################################
 #Events Stuff
