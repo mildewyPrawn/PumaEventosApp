@@ -57,12 +57,16 @@
                       <a href="{% url 'updateEvent' evento.id %}">Editar Evento</a>
                     </li>
                     <li>
-                    <div class="facebook-this">
-                      <h4>Comparte el evento en </h4>
-                      <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook </a>
-                      <a href="https://twitter.com/intent/tweet?text=Topa%20este%20eventazo%20%23PumaEventos%20{{ request.build_absolute_uri }}"> Twitter </a>
-                      <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}/&title=Topa%20este%20eventazo!%20&summary=Puma%20Eventos%20Ilakech%20Alakech!&source={{ request.build_absolute_uri }}/"> Linkedin </a>
-                    </div>
+                      <h4>Registrarse en el evento</h4>
+                      <a href="{% url 'registerEvent' %}">Registrarse en el evento</a>
+                    </li>
+                    <li>
+                      <div class="facebook-this">
+                        <h4>Comparte el evento en </h4>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook </a>
+                        <a href="https://twitter.com/intent/tweet?text=Topa%20este%20eventazo%20%23PumaEventos%20{{ request.build_absolute_uri }}"> Twitter </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}/&title=Topa%20este%20eventazo!%20&summary=Puma%20Eventos%20Ilakech%20Alakech!&source={{ request.build_absolute_uri }}/"> Linkedin </a>
+                      </div>
                     </li>
                     <hr>
                   </dl>
