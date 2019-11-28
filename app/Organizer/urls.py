@@ -35,4 +35,7 @@ urlpatterns = [
 
     ######## EVENTS SEARCH ########
     path('search/', SearchEventsView.as_view(), name='search_results'),
+
+    ######## REGISTER EVENT ########
+    path('eventos/register', RegisterEvent, name='registerEvent'),
 ]
