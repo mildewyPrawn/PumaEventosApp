@@ -41,15 +41,21 @@
         <!-- ############################################## -->
         <!-- AQUI va el codigo base!! -->
         <!-- ############################################## -->
+        <p>
+          <h1>
+            Yo, {{user}} quiero ir al evento de nombre '{{evento.nombre}}' el día
+            {{evento.fecha_inicio}}, en {{evento.direccion}}.
+          </h1>
+        </p>
+
+        <form method="POST">
+          {% csrf_token %}
+          <h2>Al hacer click en aceptar me comprometo a asistir.</h2>
+          <button type="submit">Confirmar</button>
+          <button onclick="goBack()">Cancelar </button>
+          <!-- <button onclick="goBack()">Cancelar </button> -->
+        </form>
         
-
-
-
-
-
-
-
-            
         <!-- ############################################## -->
         <!-- AQUI Termina el codigo base!! -->
         <!-- ############################################## -->
@@ -82,6 +88,11 @@
     <script src="../../../static/js/shared/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
+    <script>
+      function goBack() {
+          window.history.back();
+      }
+    </script>
     <!-- End custom js for this page-->
   </body>
 </html>
