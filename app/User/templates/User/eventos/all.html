@@ -28,10 +28,9 @@
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:../../partials/_settings-panel.html -->
-        {% include '../../partials/_settings-panel.html' %}
+        {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
-        <!-- partial:../../partials/_sidebar.html -->
-        {% include '../../partials/_sidebar.html' %}   
+        {% include 'partials/_sidebar.html' %}
         <!-- partial -->
 
         <!-- AQUI va el codigo base!! -->
@@ -56,9 +55,12 @@
 
                     </li>
                     <hr>
-
                     {% endfor %}
                   </dl>
+                  {% if user.usuario.organizador == True %}
+                  <a href="{% url 'createEvent' %}">New Event</a>
+                  {% else %}
+                  {% endif %}
                 </lo>
               </div>
             </div>
