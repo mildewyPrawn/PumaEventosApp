@@ -30,7 +30,7 @@ def RegisterEvent(request, id1, id2):
         usuario = User.objects.get(pk=id2)
         # evento = Evento.objects.get(id=id)
         template = 'registerEvent.html'
-        context = {'evento':evento}
+        context = {'evento':evento, 'user':usuario}
         context = {}
         if request.method == 'POST':
                 subject = 'Invitación a ' + evento.nombre
