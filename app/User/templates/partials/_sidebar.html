@@ -16,22 +16,17 @@
             <img src="{{ user.usuario.avatar.url }}" width="1000px">
           </div>
           {% endif %}
-
+          
           <div class="text-wrapper">
             <p class="profile-name">{{ user }}</p>
           </div>
-          <!-- TODO no va nuevo evento en todos lados -->
         </div>
-        {% if user.organizador == null or user.organizador == "" %}
-        <button class="btn btn-success btn-sm btn-block">HOLA </button>
+        {% if user.usuario.organizador == True %}
+        <button onclick="window.location.href = '/eventos/all';" class="btn btn-success btn-sm btn-block">Mis Eventos </button>
         {% else %}
-        <button class="btn btn-success btn-sm btn-block">Mis Eventos </button>
         {% endif %}
-          <div>
-            <!-- <img src="" width="1000px"> -->
-            <!-- {{user.password}} -->
-            
-          </div>
+        <div>
+        </div>
       </div>
     </li>
     <li class="nav-item">
@@ -40,18 +35,24 @@
         <span class="menu-title">Todos los eventos</span>
       </a>
     </li>
+    {% if user.usuario.organizador == True %}
     <li class="nav-item">
       <a class="nav-link" href="/../../eventos/misEventos">
         <i class="menu-icon fa fa-tag"></i>
         <span class="menu-title">Mis Eventos Organizados</span>
       </a>
     </li>
+    {% else %}
+    {% endif %}
+    {% if user.usuario.organizador == True %}
     <li class="nav-item">
       <a class="nav-link" href="/../../MisStaffs/listStaffs">
         <i class="menu-icon fa fa-user-o"></i>
         <span class="menu-title">Mis Staffs</span>
       </a>
     </li>
+    {% else %}
+    {% endif %}
     <li class="nav-item">
       <a class="nav-link" href="/../../eventos/home">
         <i class="menu-icon fa fa-tags"></i>
