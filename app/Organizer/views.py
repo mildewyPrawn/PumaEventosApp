@@ -1,6 +1,9 @@
 from .forms import EventosForm, StaffForm, InvitacionesForm
 from .models import Evento, Staff, Invitacion
+from .utils import send_email
+from User.models import User
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.views.generic import TemplateView, ListView
 
@@ -21,10 +24,25 @@ def Invitaciones(request,evento_id):
 	invitaciones= Invitacion.objects.all()
 	return render(request,'invitaciones.html',{'invitaciones':invitaciones})
 
-def RegisterEvent(request, id):
-        evento = Evento.objects.get(id=id)
+# def RegisterEvent(request, id, user):
+def RegisterEvent(request, id1, id2):
+        evento = Evento.objects.get(pk=id1)
+        usuario = User.objects.get(pk=id2)
+        # evento = Evento.objects.get(id=id)
         template = 'registerEvent.html'
         context = {'evento':evento}
+        context = {}
+        if request.method == 'POST':
+                subject = 'Invitación a ' + evento.nombre
+                content = 'Tienes una cita el día: ' + str(evento.fecha_inicio) + ' para el evento: ' + evento.nombre
+                guest = [usuario.email]
+                send_email(guest, subject, content)
+                # print (user)
+                # print(id1)
+                print(usuario.email)
+                print(evento.nombre)
+                return HttpResponse('Se ha enviado la invitación por correo :3')
+                
         return render(request, template, context)
 
 

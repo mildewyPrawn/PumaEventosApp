@@ -37,5 +37,5 @@ urlpatterns = [
     path('search/', SearchEventsView.as_view(), name='search_results'),
 
     ######## REGISTER EVENT ########
-    path('eventos/register/<int:id>', RegisterEvent, name='registerEvent'),
+    path('eventos/register/<str:id1>/<str:id2>', RegisterEvent, name='registerEvent'),
 ]
