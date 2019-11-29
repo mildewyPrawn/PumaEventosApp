@@ -3,7 +3,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User as UserDjango
 from User.models import User
-from compositefk.fields import CompositeForeignKey, LocalFieldValue
+#from compositefk.fields import CompositeForeignKey, LocalFieldValue
 
 # Create your models here.
 
@@ -13,6 +13,7 @@ class Etiqueta(models.Model):
 
 class Evento(models.Model):
     nombre = models.CharField(max_length=255)
+    ubicacion = models.CharField(max_length=255)
     descripcion = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     fecha_inicio = models.DateField()

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 50%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+					<script type="text/javascript">
+	                	ventana.onload = function(){
+	                		var latlng = new google.maps.LatLng(19.3238617, -99.1834288);
+	                		var map = new google.maps.Map(document.getElementById('map'), {
+	                			center : latlng,
+	                			zoom: 15,
+	                			mapTypeId: google.maps.MapTypeId.ROADMAP
+	                		});
+	                		var marker = new google.maps.Marker({
+	                			position: latlng,
+	                			map: map,
+	                			title: 'Set lan/lon values for this property',
+	                			draggable: true
+	                		});
+
+	                		});
+	                	};
+	                </script> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDorxJ1Qq8dtIoIsoF1hDorWraYR7aQOME&callback=initMap"
+    async defer></script>
+  </body>
+</html>
