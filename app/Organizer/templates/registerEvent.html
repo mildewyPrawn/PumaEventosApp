@@ -28,39 +28,39 @@
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_settings-panel.html -->
-          {% include 'partials/_settings-panel.html' %}
+        {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
-          {% include 'partials/_sidebar.html' %}   
+        {% include 'partials/_sidebar.html' %}   
         <!-- partial -->
 
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="card">
               <div class="card-body">
-        <!-- ############################################## -->
-        <!-- AQUI va el codigo base!! -->
-        <!-- ############################################## -->
-        <p>
-          <h1>
-            Yo, {{user}} quiero ir al evento.
-            <!-- TODO sacar los datos del evento. antes se podía, pero si paso id1 ya no se puede -->
-            <!-- de nombre '{{evento.nombre}}' el día -->
-            <!-- {{evento.fecha_inicio}} a las {{evento.horario_inicio}}, en {{evento.direccion}}. -->
-          </h1>
-        </p>
+                <!-- ############################################## -->
+                <!-- AQUI va el codigo base!! -->
+                <!-- ############################################## -->
+                <p>
+                  <h1>
+                    Yo, {{user}} quiero ir al evento.
+                    <!-- TODO sacar los datos del evento. antes se podía, pero si paso id1 ya no se puede -->
+                    <!-- de nombre '{{evento.nombre}}' el día -->
+                    <!-- {{evento.fecha_inicio}} a las {{evento.horario_inicio}}, en {{evento.direccion}}. -->
+                  </h1>
+                </p>
 
-        <form method="POST">
-          {% csrf_token %}
-          <h2>Al hacer click en aceptar me comprometo a asistir.</h2>
-          <button type="submit">Confirmar</button>
-          <button onclick="goBack()">Cancelar </button>
-          <!-- <button onclick="goBack()">Cancelar </button> -->
-        </form>
-        
-        <!-- ############################################## -->
-        <!-- AQUI Termina el codigo base!! -->
-        <!-- ############################################## -->
+                <form method="POST">
+                  {% csrf_token %}
+                  <h2>Al hacer click en aceptar me comprometo a asistir.</h2>
+                  <button type="submit">Confirmar</button>
+                  <button onclick="goBack()">Cancelar </button>
+                  <!-- <button onclick="goBack()">Cancelar </button> -->
+                </form>
+                
+                <!-- ############################################## -->
+                <!-- AQUI Termina el codigo base!! -->
+                <!-- ############################################## -->
 
 
               </div>
@@ -68,11 +68,11 @@
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-            {% include 'partials/_footer.html' %}
+          {% include 'partials/_footer.html' %}
           <!-- partial -->
-        <!-- main-panel ends -->
+          <!-- main-panel ends -->
         </div>
-      <!-- page-body-wrapper ends -->
+        <!-- page-body-wrapper ends -->
       </div>
     </div>
     <!-- container-scroller -->
