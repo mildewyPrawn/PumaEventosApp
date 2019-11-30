@@ -18,6 +18,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
 from django.views.generic import CreateView, TemplateView
+from django.contrib import messages
 
 from Organizer.models import *
 
@@ -90,7 +91,9 @@ class SignUpView(View):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return render(request,'User/registration/login.html', 
+                context={'message':'Please confirm your email address to complete the registration'})
+            #return HttpResponse('Please confirm your email address to complete the registration')
         else:
             self.context['form'] = form
         print(form.errors, "asdads")
@@ -114,7 +117,10 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        # messages.info(request,'Thank you for your email confirmation. Now you can login your account.')
+        #return HttpResponseRedirect('/login/')
+        return render(request,'User/registration/login.html', 
+            context={'message':'Thank you for your email confirmation. Now you can login your account.'})
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -148,7 +154,8 @@ class SignInView( View):
         form = SingInForm(request.POST)
         print("im here")
         if form.is_valid():
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            user = authenticate(request, username=form.cleaned_data['username'], 
+                password=form.cleaned_data['password'])
             print(user, "asdasdasdad")
             if user is not None:
                 login(request, user)
