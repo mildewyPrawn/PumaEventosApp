@@ -1,7 +1,9 @@
-from django.urls import path
-from django.urls import include, path
-from django.contrib import admin
 from . import views
+from .views import *
+from django.conf.urls import url, include
+from django.contrib import admin
+from django.urls import include, path
+from django.urls import path
 
 app_name = 'User'
 urlpatterns = [
@@ -22,28 +24,24 @@ urlpatterns = [
     #accounts/reset/done/ [name='password_reset_complete']
     #;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    path('', views.Index, name='index'),
-    path('home/', views.Index, name='index'),
+    path('',Index, name='index'),
+    path('home/',Index, name='index'),
     path('about/', views.About.as_view(), name='about'),
     path('login/', views.SignInView.as_view(), name='login'),
-    # path('login/register.html/', views.Register, name='register'), # no sé si sirva
-    path('register/', views.Register, name='register'),
-    path('events/', views.Eventos.as_view(), name='events'),
-    path('events/index.html/', views.Events, name='events'),
-    path('events/index/', views.Events, name='events'),
-    path('events/home.html', views.Events, name='eventsHome'),
-    path('events/home', views.Events, name='eventsHome'),
-    path('events/all', views.EventsList, name='eventsList'),
-    path("logout", views.logout_request, name="logout"),
-
-    path("error505", views.error505, name="error505"),
-
-
-    #path('login/', views.SignInView.as_view(), name='login'),
-    #path('home/login/', views.SignInView.as_view(), name='login'),
-    #path('login/register.html/', views.Register, name='register'),
-    #path('register/', views.Register, name='register2'),
-    # path('about/', views.About.as_view(), name='about'),
-    # path('login/', views.Login.as_view(), name='login'),
-    # path('logout/', views.Logout.as_view(), name='logout'),
+    path('eventos/',views.EventosN.as_view(), name='eventos'),
+    path('eventos/all',EventosList, name='eventosList'),
+    path('eventos/home',Eventos, name='eventosHome'),
+    path('eventos/home.html',Eventos, name='eventosHome'),
+    path('eventos/index.html/',Eventos, name='eventos'),
+    path('eventos/index/',Eventos, name='eventos'),
+    path("error505",error505, name="error505"),
+    path('home/', views.HomeView.as_view(),name='home'),
+    path('login/register.html/', views.Register, name='register'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('register/', views.SignUpView.as_view(), name='register2'),
+    path('register/Organizador/', views.RegistroOrganizador.as_view(),
+         name='registroOrg'),
+    path('register/cambioContrasena/', views.CambioContrasena.as_view(), name='cambio'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
+    url(r'^register/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activateEvent, name='activateEvent'),
 ]

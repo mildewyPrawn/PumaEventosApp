@@ -28,10 +28,10 @@
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_settings-panel.html -->
-          {% include 'partials/_settings-panel.html' %}
+        {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
-          {% include 'partials/_sidebar.html' %}   
+        {% include 'partials/_sidebar.html' %}   
         <!-- partial -->
 
         <!-- AQUI va el codigo base!! -->
@@ -39,39 +39,61 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="card">
-            <div class="card-body">
-              
-              <h4>Lista de eventos</h4>
-              <lo>
-               <dl> 
-                  <li><h5>Nombre :</h5>{{evento.nombre}} <br>
-                  <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
-                  <h5>Fecha Inicio : {{evento.fecha_inicio}}</h5>
-                  <h5>Fecha Fin : {{evento.fecha_fin}}</h5>
-                  <h5>Direccion : {{evento.direccion}}</h5>
-                  <h5>Capacidad : {{evento.capacidad}}</h5>
-                  
-                  <a href="{% url 'updateEvent' evento.id %}">Editar Evento</a>
-                </li>
-                <hr>
-              </dl>
-                <a href="{% url 'createEvent' %}">New Event</a>
-              </lo>
-            </div>
+              <div class="card-body">
+                
+                <h4>Lista de eventos</h4>
+                <lo>
+                  <dl> 
+                    <li><h5>Nombre :</h5>{{evento.nombre}} <br>
+                      <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
+                      <h5>Fecha Inicio : {{evento.fecha_inicio}}</h5>
+                      <h5>Fecha Fin : {{evento.fecha_fin}}</h5>
+                      <h5>Direccion : {{evento.direccion}}</h5>
+                      <h5>Capacidad : {{evento.capacidad}}</h5>
+                      {% if user.usuario.es_Organizador == True or user.usuario.es_Staff == True %}
+                      <a href="{% url 'Invitaciones' evento.id %}">Ver Invitaciones del Evento</a>
+                      {% else %}
+                      {% endif %}
+                      <br>
+                      {% if user.usuario.es_Organizador == True %}
+                      <a href="{% url 'updateEvent' evento.id %}">Editar Evento</a>
+                      {% else %}
+                      {% endif %}
+                    </li>
+                    <li>
+                      <h4>Registrarse en el evento</h4>
+                      <a href="{% url 'registerEvent' id1=evento.id id2=user.id %}">Registrarse en el evento</a>
+                    </li>
+                    <li>
+                      <div class="facebook-this">
+                        <h4>Comparte el evento en </h4>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"> Facebook </a>
+                        <a href="https://twitter.com/intent/tweet?text=Topa%20este%20eventazo%20%23PumaEventos%20{{ request.build_absolute_uri }}"> Twitter </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}/&title=Topa%20este%20eventazo!%20&summary=Puma%20Eventos%20Ilakech%20Alakech!&source={{ request.build_absolute_uri }}/"> Linkedin </a>
+                      </div>
+                    </li>
+                    <hr>
+                  </dl>
+                  {% if user.usuario.es_Organizador == True %}
+                  <a href="{% url 'createEvent' %}">New Event</a>
+                  {% else %}
+                  {% endif %}
+                </lo>
+              </div>
             </div>
 
             
-        <!-- AQUI Termina el codigo base!! -->
+            <!-- AQUI Termina el codigo base!! -->
 
 
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-            {% include 'partials/_footer.html' %}
+          {% include 'partials/_footer.html' %}
           <!-- partial -->
-        <!-- main-panel ends -->
+          <!-- main-panel ends -->
         </div>
-      <!-- page-body-wrapper ends -->
+        <!-- page-body-wrapper ends -->
       </div>
     </div>
     <!-- container-scroller -->

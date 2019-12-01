@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Registro PumaEventos</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../../static/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../../static/vendors/iconfonts/puse-icons-feather/feather.css">
+    <link rel="stylesheet" href="../../../static/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../../../static/vendors/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../../static/css/shared/style.css">
+    <link rel="stylesheet" href="../../../static/css/shared/test.css">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../../../static/css/demo_1/style.css">
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="../../../static/images/favicon.png" /> </head>
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+          <div class="row w-100">
+            <div class="col-lg-4 mx-auto">
+              <div class="auto-form-wrapper">
+                <form method="post" action="#" enctype="multipart/form-data">
+                  <h2 class="text-center mb-4">Cambio Contraseña</h2>
+                  <p>{{ user.username }}</p>
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label class="label">Contraseña</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" name="password1" placeholder="Password">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
+                        </span>
+                      </div>
+                    </div>
+                    {% if form.password1.errors %}
+                    {% for error in form.password1.errors %}
+                    <div class="input-error">
+                      {{ error }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label class="label">Confirmar contraseña</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
+                        </span>
+                      </div>
+                    </div>
+                    {% if form.password2.errors %}
+                    {% for error in form.password2.errors %}
+                    <div class="input-error">
+                      {{ error }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                  </div>
+                  
+                  <!-- if form.email.value //checha si hay un valor ya dado y lo regresa, mantiene los datos
+                  value={{ form.email.value }}
+
+                  {% if form.email.errors %}
+                  {% for error in form. %}
+                  div class email-errors>
+                  {{error}}
+                  {% endfor %}
+                  {% endif %}
+                  -->
+                  <div class="form-group">
+                    <button class="btn btn-primary submit-btn btn-block">Confirmar</button>
+                  </div>
+                  <!-- <div class="text-block text-center my-3">
+                    <span class="text-small font-weight-semibold">Already have and account ?</span>
+                    <a href="login" class="text-black text-small">Login</a>
+                  </div> -->
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../../static/vendors/js/vendor.bundle.base.js"></script>
+    <script src="../../../static/vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../../static/js/shared/off-canvas.js"></script>
+    <script src="../../../static/js/shared/hoverable-collapse.js"></script>
+    <script src="../../../static/js/shared/misc.js"></script>
+    <script src="../../../static/js/shared/settings.js"></script>
+    <script src="../../../static/js/shared/todolist.js"></script>
+    <!-- endinject -->
+  </body>
+</html>

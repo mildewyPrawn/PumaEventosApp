@@ -28,55 +28,118 @@
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:../../partials/_settings-panel.html -->
-          {% include 'partials/_settings-panel.html' %}
+        {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
         <!-- partial:../../partials/_sidebar.html -->
-          {% include 'partials/_sidebar.html' %}   
+        {% include 'partials/_sidebar.html' %}   
         <!-- partial -->
 
         <!-- AQUI va el codigo base!! -->
         <div class="main-panel">
           <div class="content-wrapper"> 
             <h1>New/Update Event</h1>
-              <form method="POST">
-                {% csrf_token %}
-                {{ form }}
+            <form method="POST">
+              {% csrf_token %}
+              {{ form.non_field_errors }}
+              <div class="card-body">
+                <div>
+                  <h3>Información General</h3>
+                  <section>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="userName">Nombre:</label>
+                      {{ form.nombre }}
+                    </div>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Descripción:</label>
+                      {{ form.descripcion }}
+                    </div>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Dirección:</label>
+                      {{ form.direccion }}
+                    </div>
+                  </section>
+                  <h3>Horarios y Fechas</h3>
+                  <section>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Fecha de inicio:</label>
+                      {{ form.fecha_inicio }}
+                    </div>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Fecha de finalización:</label>
+                      {{ form.fecha_fin }}
+                    </div>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Hora de inicio:</label>
+                      {{ form.horario_inicio }}
+                    </div>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Hora de termino:</label>
+                      {{ form.horario_fin }}
+                    </div>
+                  </section>
+                  <h3>Otros</h3>
+                  <section>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Capacidad:</label>
+                      {{ form.capacidad }}
+                    </div>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Selecciona una etiqueta:</label>
+                      {{ form.etiqueta }}
+                    </div>
+                    <div class="fieldWrapper">
+                      {{ form.subject.errors}}
+                      <label for="ev_nombre">Quien organiza:</label>
+                      {{ form.organizador }}
+                    </div>
+                  </section>
+                </div>
+                
                 <button type="submit">Save</button>
-              </form>
-              
-              {% if evento %}
-                <a href="{% url 'deleteEvent' evento.id %}">Delete</a>
-              {% endif %}  
-              
+            </form>
+            {% if evento %}
+            <a href="{% url 'deleteEvent' evento.id %}">Delete</a>
+            {% endif %}  
             
-        <!-- AQUI Termina el codigo base!! -->
+            
+            <!-- AQUI Termina el codigo base!! -->
 
 
-          </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:../../partials/_footer.html -->
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
             {% include 'partials/_footer.html' %}
-          <!-- partial -->
-        <!-- main-panel ends -->
+            <!-- partial -->
+            <!-- main-panel ends -->
+          </div>
+          <!-- page-body-wrapper ends -->
         </div>
-      <!-- page-body-wrapper ends -->
       </div>
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="../../../../static/vendors/js/vendor.bundle.base.js"></script>
-    <script src="../../../static/vendors/js/vendor.bundle.addons.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page-->
-    <!-- End plugin js for this page-->
-    <!-- inject:js -->
-    <script src="../../../static/js/shared/off-canvas.js"></script>
-    <script src="../../../static/js/shared/hoverable-collapse.js"></script>
-    <script src="../../../static/js/shared/misc.js"></script>
-    <script src="../../../static/js/shared/settings.js"></script>
-    <script src="../../../static/js/shared/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <!-- End custom js for this page-->
+      <!-- container-scroller -->
+      <!-- plugins:js -->
+      <script src="../../../../static/vendors/js/vendor.bundle.base.js"></script>
+      <script src="../../../static/vendors/js/vendor.bundle.addons.js"></script>
+      <!-- endinject -->
+      <!-- Plugin js for this page-->
+      <!-- End plugin js for this page-->
+      <!-- inject:js -->
+      <script src="../../../static/js/shared/off-canvas.js"></script>
+      <script src="../../../static/js/shared/hoverable-collapse.js"></script>
+      <script src="../../../static/js/shared/misc.js"></script>
+      <script src="../../../static/js/shared/settings.js"></script>
+      <script src="../../../static/js/shared/todolist.js"></script>
+      <!-- endinject -->
+      <script src="../../../assets/js/shared/wizard.js"></script>
+      <!-- Custom js for this page-->
+      <!-- End custom js for this page-->
   </body>
 </html>
