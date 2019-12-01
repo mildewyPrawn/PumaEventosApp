@@ -1,4 +1,4 @@
-from .forms import CreaOrganizador, SingInForm, CreateUrs
+from .forms import CreaOrganizador, SingInForm, CreateUrs, FCambioContrasena
 from .models import Usuario
 from .tokens import account_activation_token
 from .utils import IsNotAuthenticatedMixin
@@ -69,7 +69,9 @@ class SignUpView(View):
             user.save()
             user2 = Usuario(
                 user=user, 
-                avatar=form.clean_avatar()
+                avatar=form.clean_avatar(),
+                es_Organizador = False,
+                es_Staff = False
             )
             user2.save()
             #print(user)
@@ -93,15 +95,8 @@ class SignUpView(View):
             return HttpResponse('Please confirm your email address to complete the registration')
         else:
             self.context['form'] = form
-        print(form.errors, "asdads")
-        return render(request, self.template, {'form': form})
-            #messages.info(request, 'Your password has been changed successfully!')
-            #return HttpResponseRedirect("/")
-            #return redirect('/home/')
-        #print(form.errors)
-        #return render(request, self.template)
-    #def form_valid(self, form):   
-    #    return redirect('/')
+        #print(form.errors, "asdads")
+        return render(request, self.template, self.context)
 
 def activate(request, uidb64, token):
     try:
@@ -124,19 +119,89 @@ class RegistroOrganizador(LoginRequiredMixin, View):
     
     def get(self, request):
         if request.user.is_superuser:
+            form = CreaOrganizador()
             return render(request, self.template, self.context)
-        return redirect('/home/')
+        return redirect('/eventos/')
 
     def post(self, request):
-        return redirect('/home/')  
+        form = CreaOrganizador(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            user2 = Usuario(
+                user=user,
+                avatar = form.clean_avatar(),
+                es_Organizador = True,
+                es_Staff = False,
+            )
+            user2.save()
+            current_site = get_current_site(request)
+            """
+            if condicion:
+                form.add.errors(field, error)
+            """
+            mail_subject = 'Activate your PumaEventos account.'
+            message = render_to_string('acc_active_org.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            #Add render page, Usuario creado
+            return HttpResponse("Creado weon")
+        else:
+            self.context['form'] = form
+        return render(request, self.template, self.context)  
+
+def activateO(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        #redirect()
+        return redirect('/register/cambioContrasena')
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+class CambioContrasena(View):
+    template = "User/registration/cambioContra.html"
+    context = {}
+
+    def get(self, request):
+        form = FCambioContrasena(request.user)
+        return render(request, self.template, self.context)
+
+    def post(self, request):
+        form = FCambioContrasena(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            logout(request)
+            return redirect('register/login/')
+        else:
+            self.context['form'] = form
+        return render(request, self.template, self.context)
 
 #Login que si hace algo.
-class SignInView( View):
+class SignInView(IsNotAuthenticatedMixin ,View):
     #template_name = 'User/registration/login.html'
     template = 'User/registration/login.html'
+    context = {}
+
     def get(self, request):
         form = SingInForm()
-        print("im here")
+        #print("im here")
         return render(request, self.template)
     
     def post(self, request):
@@ -146,21 +211,21 @@ class SignInView( View):
         #if request.user.is_authenticated():
         #    return redirect('/home/')
         form = SingInForm(request.POST)
-        print("im here")
+        #print("im here") 
         if form.is_valid():
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            print(user, "asdasdasdad")
+            #print(user, "asdasdasdad")
             if user is not None:
                 login(request, user)
                 if request.GET.get("next", None) is not None:
                     return redirect(request.GET.get("next"))
                 return redirect('/eventos/')
-            #messages.add_message(request, messages.INFO, 'Hello world.')
-            return render(request, self.template, {'form': form})
-        # return render(request, self.template)
-        #self.context['form'] = form
-        return render(request, self.template, {'form': form})
-        # return render(request, self.template)
+            #messages.add_message(request, messages.INF ─O, 'Hello world.')
+            form.add_error("username","Usuario o contraseña erroneos.")
+            self.context['form'] = form
+            #print(form.errors)
+            return render(request, self.template, self.context)
+        return render(request, self.template, self.context)
 
 class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
@@ -176,17 +241,19 @@ def Register(request):
     context = {}
     return render(request, template, context)
 
-class Eventos(LoginRequiredMixin, CreateView):
+class EventosN(LoginRequiredMixin, CreateView):
+    context = {}
+    template = 'User/eventos/home.html'
+
     def get(self, request):
         print(request.method)
-        template = 'User/eventos/home.html'
-        #user = request.user
+        user = request.user
         print("...............................")
         print(user)
         #print()
         print("...............................")
-        #context = {'user':user}
-        return render(request, template)
+        self.context = {'user':user}
+        return render(request, self.template, self.context)
 
 def Eventos(request):
     """
@@ -219,17 +286,11 @@ def EventosList(request):
     context = {'user':user,'eventos':eventos}
     return render(request, template, context)
 
-
-
 def logout_request(request):
     template = 'User/general/index.html'
     context ={}
     logout(request)
     return render(request,template,context)
-
-
-
-
 
 class About(View):
     """
