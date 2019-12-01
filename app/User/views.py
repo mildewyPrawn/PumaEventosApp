@@ -118,6 +118,25 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 
+def activateEvent(request, uidb64, token):
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            inv = Invitacion.objects.get(pk=uid)
+            print('>>>>>>')
+            print(inv)
+            print('>>>>>>')
+        except(TypeError, ValueError, OverflowError):
+            inv = None
+        if inv is not None:
+            Invitacion.objects.filter(pk=uid).update(activa=False,
+                                                     asistencia_activa=True)
+            print('+++', inv.asistencia_activa)
+            if inv.asistencia_activa:
+                return HttpResponse('Su presencia ya fue registrada.')                
+            return HttpResponse('Su presencia ha sido registrada.')
+        else:
+            return HttpResponse('Su presencia ya fue registrada.')
+
 class RegistroOrganizador(LoginRequiredMixin, View):
     template = "User/registration/registrOrgnz.html"
     context = {}
