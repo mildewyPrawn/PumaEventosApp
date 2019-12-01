@@ -225,14 +225,8 @@ class SignInView(IsNotAuthenticatedMixin ,View):
         form = SingInForm(request.POST)
         #print("im here") 
         if form.is_valid():
-<<<<<<< HEAD
-            user = authenticate(request, username=form.cleaned_data['username'], 
-                password=form.cleaned_data['password'])
-            print(user, "asdasdasdad")
-=======
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             #print(user, "asdasdasdad")
->>>>>>> registroOrganizador
             if user is not None:
                 login(request, user)
                 if request.GET.get("next", None) is not None:
