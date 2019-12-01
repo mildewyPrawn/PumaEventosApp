@@ -19,6 +19,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
 from django.views.generic import CreateView, TemplateView
 from django.contrib import messages
+import urllib
 
 from Organizer.models import *
 
@@ -28,6 +29,7 @@ from .forms import CreateUrs, SingInForm
 # from Post.models import Post
 # from Home.forms import LoginForm
 # Function Views
+
 
 def Index(request):
     """
@@ -91,8 +93,8 @@ class SignUpView(View):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            return render(request,'User/registration/login.html', 
-                context={'message':'Please confirm your email address to complete the registration'})
+            context = {"message":'Please confirm your email address to complete the registration'}
+            return redirect('/../home/?' + urllib.parse.urlencode(context))
             #return HttpResponse('Please confirm your email address to complete the registration')
         else:
             self.context['form'] = form
@@ -119,8 +121,7 @@ def activate(request, uidb64, token):
         # return redirect('home')
         # messages.info(request,'Thank you for your email confirmation. Now you can login your account.')
         #return HttpResponseRedirect('/login/')
-        return render(request,'User/registration/login.html', 
-            context={'message':'Thank you for your email confirmation. Now you can login your account.'})
+        return redirect('/../home',context={"message":'Thank you for your email confirmation. Now you can login your account.'})
     else:
         return HttpResponse('Activation link is invalid!')
 
