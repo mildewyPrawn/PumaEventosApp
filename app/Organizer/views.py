@@ -1,11 +1,15 @@
 from .forms import EventosForm, StaffForm, InvitacionesForm
 from .models import Evento, Staff, Invitacion
-from .utils import send_email
+from .utils import send_email, invitacion_activacion_token
 from User.models import User
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
+from django.template.loader import render_to_string
 from django.views.generic import TemplateView, ListView
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
 
 # Create your views here.
 
@@ -33,9 +37,20 @@ def RegisterEvent(request, id1, id2):
         context = {'evento':evento, 'user':usuario}
         context = {}
         if request.method == 'POST':
+                current_site = get_current_site(request)
                 subject = 'Invitación a ' + evento.nombre
                 content = 'Tienes una cita el día: ' + str(evento.fecha_inicio) + ' para el evento: ' + evento.nombre
                 guest = [usuario.email]
+                inv = Invitacion(evento_id=evento, user_id=usuario, activa=True,
+                                 asistencia_activa=False)
+                inv.save()
+                message = render_to_string('registration_mail.html', {
+                        'user': usuario,
+                        'domain': current_site.domain,
+                        'uid':urlsafe_base64_encode(force_bytes(inv.pk)),
+                        'token':invitacion_activacion_token.make_token(inv), # esto me causa dudas
+                })
+                content += message
                 send_email(guest, subject, content)
                 # print (user)
                 # print(id1)
@@ -43,8 +58,7 @@ def RegisterEvent(request, id1, id2):
                 print(evento.nombre)
                 return HttpResponse('Se ha enviado la invitación por correo :3')
                 
-        return render(request, template, context)
-
+        return render(request, template, context)                
 
 ##########################################################################
 #Events Stuff

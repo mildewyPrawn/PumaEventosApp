@@ -43,5 +43,5 @@ urlpatterns = [
          name='registroOrg'),
     path('register/cambioContrasena/', views.CambioContrasena.as_view(), name='cambio'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
-    url(r'^activateO/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activateO, name='activateO'),
+    url(r'^register/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activateEvent, name='activateEvent'),
 ]
