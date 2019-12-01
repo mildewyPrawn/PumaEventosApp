@@ -57,7 +57,7 @@
                     <hr>
                     {% endfor %}
                   </dl>
-                  {% if user.usuario.organizador == True %}
+                  {% if user.usuario.es_Organizador == True %}
                   <a href="{% url 'createEvent' %}">New Event</a>
                   {% else %}
                   {% endif %}

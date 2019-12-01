@@ -50,12 +50,12 @@
                       <h5>Fecha Fin : {{evento.fecha_fin}}</h5>
                       <h5>Direccion : {{evento.direccion}}</h5>
                       <h5>Capacidad : {{evento.capacidad}}</h5>
-                      {% if user.usuario.organizador == True or user.usuario.staff == True %}                      
+                      {% if user.usuario.es_Organizador == True or user.usuario.es_Staff == True %}
                       <a href="{% url 'Invitaciones' evento.id %}">Ver Invitaciones del Evento</a>
                       {% else %}
                       {% endif %}
                       <br>
-                      {% if user.usuario.organizador == True %}
+                      {% if user.usuario.es_Organizador == True %}
                       <a href="{% url 'updateEvent' evento.id %}">Editar Evento</a>
                       {% else %}
                       {% endif %}
@@ -74,7 +74,7 @@
                     </li>
                     <hr>
                   </dl>
-                  {% if user.usuario.organizador == True %}
+                  {% if user.usuario.es_Organizador == True %}
                   <a href="{% url 'createEvent' %}">New Event</a>
                   {% else %}
                   {% endif %}
