@@ -1,6 +1,8 @@
 from . import views
 from .views import *
 from django.conf.urls import url, include
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from django.urls import path
@@ -44,4 +46,4 @@ urlpatterns = [
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
     url(r'^organizador_registrado/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.organizador_registrado, name='organizador_registrado'),
     url(r'^register/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activateEvent, name='activateEvent'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -38,6 +38,7 @@ class Invitacion(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     activa = models.BooleanField() # True si aún no se lee en el evento
     asistencia_activa = models.BooleanField() # True si ya se leyó en el evento
+    qr = models.ImageField(upload_to='images/', blank=True, null=True)
     #id = CompositeForeignKey(id,on_delete=models.CASCADE,to_fields={"evento_id","user_id"})
 
     class Meta:
