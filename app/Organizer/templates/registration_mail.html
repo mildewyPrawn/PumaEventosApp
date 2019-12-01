@@ -1,5 +1,3 @@
 {% autoescape off %}
-Hi {{ user.username }},
-Por favor enseña la siguiente dirección a un miembro del staff para registrar tu entrada:
 http://{{ domain }}{% url 'User:activateEvent' uidb64=uid token=token %}
 {% endautoescape %}
