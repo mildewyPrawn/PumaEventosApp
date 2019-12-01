@@ -20,4 +20,4 @@ class StaffForm(forms.ModelForm):
 class InvitacionesForm(forms.ModelForm):
 	class Meta(object):
 		model = Invitacion
-		fields = ['evento_id','user_id','activa','asistencia_activa']
+		fields = ['evento_id','user_id','activa','asistencia_activa', 'qr',]

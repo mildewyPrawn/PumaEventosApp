@@ -1,16 +1,22 @@
 from .forms import EventosForm, StaffForm, InvitacionesForm
 from .models import Evento, Staff, Invitacion
 from .utils import send_email, invitacion_activacion_token, make_qr
-from User.models import User
+from PIL import Image
+from User.models import User, Usuario
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
+from django.template.loader import get_template
 from django.template.loader import render_to_string
-from django.views.generic import TemplateView, ListView
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views.generic import TemplateView, ListView
 import qrcode
+
 # Create your views here.
 
 
@@ -32,7 +38,6 @@ def Invitaciones(request,evento_id):
 def RegisterEvent(request, id1, id2):
         evento = Evento.objects.get(pk=id1)
         usuario = User.objects.get(pk=id2)
-        # evento = Evento.objects.get(id=id)
         template = 'registerEvent.html'
         context = {'evento':evento, 'user':usuario}
         # context = {}
@@ -41,11 +46,11 @@ def RegisterEvent(request, id1, id2):
                 subject = 'Invitación a ' + evento.nombre
                 content = 'Tienes una cita el día: ' + str(evento.fecha_inicio) + ' para el evento: ' + evento.nombre
                 guest = [usuario.email]
+                inv_count = Invitacion.objects.filter(evento_id=id1).count()
+                print('COUNT>>', inv_count)
                 inv = Invitacion(evento_id=evento, user_id=usuario, activa=True,
                                  asistencia_activa=False)
                 inv.save()
-                inv_count = Invitacion.objects.filter(evento_id=id1).count()
-                print('COUNT>>', inv_count)
                 if inv_count > evento.capacidad:
                         return HttpResponse('Ya no hay lugares disponibles :(')
                 message = render_to_string('registration_mail.html', {
@@ -56,9 +61,22 @@ def RegisterEvent(request, id1, id2):
                 })
                 # content += message
                 img = make_qr(message)
-                img.save(id1 + id2 + '.png')
+                img.save('images/' + id1 + id2 + '.png')
+                nombre = 'images/' + id1 + id2 + '.png'
+                im = Image.open(nombre)
+                Invitacion.objects.filter(pk=id1).update(qr=im)
+
                 content += message
-                send_email(guest, subject, content)
+                msge = EmailMultiAlternatives(subject=subject, body=content, from_email=settings.EMAIL_HOST_USER, to=guest)
+                # html_template = get_template('mail.html').render()
+                html_template = '<h1>Hola '+usuario.username+'</h1>\n'
+                html_template += '<h2>Por favor enseña el siguiente código a un miembro del staff para registrar tu entrada:</h2>'
+                html_template += '<img src=images/12.png.url enctype="multipart/form-data">'
+                html_template += message
+                # html_tempalte += '<img src=' + 12.png.url + '>'
+                msge.attach_alternative(html_template, 'text/html')
+                msge.send()
+                # send_email(guest, subject, content)
                 # print (user)
                 # print(id1)
                 print(usuario.email)
