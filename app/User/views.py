@@ -121,7 +121,8 @@ def activate(request, uidb64, token):
         # return redirect('home')
         # messages.info(request,'Thank you for your email confirmation. Now you can login your account.')
         #return HttpResponseRedirect('/login/')
-        return redirect('/../home',context={"message":'Thank you for your email confirmation. Now you can login your account.'})
+        context={"message":'Thank you for your email confirmation. Now you can login your account.'}
+        return redirect('/../home/?' + urllib.parse.urlencode(context) )
     else:
         return HttpResponse('Activation link is invalid!')
 
