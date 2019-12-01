@@ -21,7 +21,7 @@
             <p class="profile-name">{{ user }}</p>
           </div>
         </div>
-        {% if user.usuario.organizador == True %}
+        {% if user.usuario.es_Organizador == True %}
         <button onclick="window.location.href = '/eventos/all';" class="btn btn-success btn-sm btn-block">Mis Eventos </button>
         {% else %}
         {% endif %}
@@ -35,7 +35,7 @@
         <span class="menu-title">Todos los eventos</span>
       </a>
     </li>
-    {% if user.usuario.organizador == True %}
+    {% if user.usuario.es_Organizador == True %}
     <li class="nav-item">
       <a class="nav-link" href="/../../eventos/misEventos">
         <i class="menu-icon fa fa-tag"></i>
@@ -44,7 +44,7 @@
     </li>
     {% else %}
     {% endif %}
-    {% if user.usuario.organizador == True %}
+    {% if user.usuario.es_Organizador == True %}
     <li class="nav-item">
       <a class="nav-link" href="/../../MisStaffs/listStaffs">
         <i class="menu-icon fa fa-user-o"></i>
