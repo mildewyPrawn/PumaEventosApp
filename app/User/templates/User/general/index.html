@@ -41,6 +41,12 @@
                   <li class="nav-item">
                     <a class="nav-link btn btn-link" href="/../about">ACERCA DE NOSOTROS</a>
                   </li>
+                  {% if request.user.is_superuser %}
+                  <li class="nav-item">
+                    <a class="nav-link btn btn-link" href="/../register/Organizador">Registrar Organizador</a>
+                  </li>
+                  {% else %}
+                  {% endif %}
                 </ul>
               </div>
             </div>
