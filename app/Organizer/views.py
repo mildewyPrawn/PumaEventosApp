@@ -35,7 +35,7 @@ def RegisterEvent(request, id1, id2):
         # evento = Evento.objects.get(id=id)
         template = 'registerEvent.html'
         context = {'evento':evento, 'user':usuario}
-        context = {}
+        # context = {}
         if request.method == 'POST':
                 current_site = get_current_site(request)
                 subject = 'Invitación a ' + evento.nombre
@@ -44,6 +44,10 @@ def RegisterEvent(request, id1, id2):
                 inv = Invitacion(evento_id=evento, user_id=usuario, activa=True,
                                  asistencia_activa=False)
                 inv.save()
+                inv_count = Invitacion.objects.filter(evento_id=id1).count()
+                print('COUNT>>', inv_count)
+                if inv_count > evento.capacidad:
+                        return HttpResponse('Ya no hay lugares disponibles :(')
                 message = render_to_string('registration_mail.html', {
                         'user': usuario,
                         'domain': current_site.domain,
