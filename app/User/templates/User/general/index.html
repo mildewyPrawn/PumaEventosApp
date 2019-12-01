@@ -207,7 +207,15 @@
       <!-- plugins:js -->
         <script>
           var url = window.location.href.split("?");
-          alert(url[1]);
+          if (url[1] == 'msg=1') {
+            alert('Please confirm your email address to complete the registration');
+          }
+          if (url[1] == 'msg=2') {
+            alert("Thank you for your email confirmation. Now you can login your account.")
+          }
+          if (url[1] == 'msg=3') {
+            alert("Activation link is invalid!")
+          }
         </script>
       <script src="../../static/vendors/js/vendor.bundle.base.js"></script>
       <script src="../../static/vendors/js/vendor.bundle.addons.js"></script>

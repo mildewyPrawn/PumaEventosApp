@@ -93,7 +93,8 @@ class SignUpView(View):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            context = {"message":'Please confirm your email address to complete the registration'}
+            #context = {"message":'Please confirm your email address to complete the registration'}
+            context ={"msg":"1"}
             return redirect('/../home/?' + urllib.parse.urlencode(context))
             #return HttpResponse('Please confirm your email address to complete the registration')
         else:
@@ -121,10 +122,13 @@ def activate(request, uidb64, token):
         # return redirect('home')
         # messages.info(request,'Thank you for your email confirmation. Now you can login your account.')
         #return HttpResponseRedirect('/login/')
-        context={"message":'Thank you for your email confirmation. Now you can login your account.'}
+        #context={"message":'Thank you for your email confirmation. Now you can login your account.'}
+        context ={"msg":"2"}
         return redirect('/../home/?' + urllib.parse.urlencode(context) )
     else:
-        return HttpResponse('Activation link is invalid!')
+        #return HttpResponse('Activation link is invalid!')
+        context ={"msg":"3"}
+        return redirect('/../home/?' + urllib.parse.urlencode(context) )
 
 class RegistroOrganizador(LoginRequiredMixin, View):
     template = "User/registration/registrOrgnz.html"
