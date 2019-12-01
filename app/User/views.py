@@ -190,7 +190,7 @@ class RegistroOrganizador(LoginRequiredMixin, View):
             self.context['form'] = form
         return render(request, self.template, self.context)  
 
-def activateO(request, uidb64, token):
+def organizador_registrado(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -219,7 +219,7 @@ class CambioContrasena(View):
         if form.is_valid():
             user = form.save()
             logout(request)
-            return redirect('register/login/')
+            return redirect('/login/')
         else:
             self.context['form'] = form
         return render(request, self.template, self.context)

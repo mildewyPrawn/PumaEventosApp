@@ -23,7 +23,6 @@ urlpatterns = [
     #accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
     #accounts/reset/done/ [name='password_reset_complete']
     #;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
     path('',Index, name='index'),
     path('home/',Index, name='index'),
     path('about/', views.About.as_view(), name='about'),
@@ -43,5 +42,6 @@ urlpatterns = [
          name='registroOrg'),
     path('register/cambioContrasena/', views.CambioContrasena.as_view(), name='cambio'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
+    url(r'^organizador_registrado/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.organizador_registrado, name='organizador_registrado'),
     url(r'^register/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activateEvent, name='activateEvent'),
 ]
