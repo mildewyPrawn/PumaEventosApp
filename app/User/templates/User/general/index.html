@@ -30,7 +30,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
-                    <a class="nav-link btn btn-link" href=''>INICIO</a>
+                    <a class="nav-link btn btn-link" href='/eventos/'>INICIO</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link btn btn-link" href="/../login">INICIAR SESIÓN</a>
@@ -205,18 +205,18 @@
       </div>
       <!-- container-scroller -->
       <!-- plugins:js -->
-        <script>
-          var url = window.location.href.split("?");
-          if (url[1] == 'msg=1') {
+      <script>
+        var url = window.location.href.split("?");
+        if (url[1] == 'msg=1') {
             alert('Please confirm your email address to complete the registration');
-          }
-          if (url[1] == 'msg=2') {
+        }
+        if (url[1] == 'msg=2') {
             alert("Thank you for your email confirmation. Now you can login your account.")
-          }
-          if (url[1] == 'msg=3') {
+        }
+        if (url[1] == 'msg=3') {
             alert("Activation link is invalid!")
-          }
-        </script>
+        }
+      </script>
       <script src="../../static/vendors/js/vendor.bundle.base.js"></script>
       <script src="../../static/vendors/js/vendor.bundle.addons.js"></script>
       <!-- endinject -->

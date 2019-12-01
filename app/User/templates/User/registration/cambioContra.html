@@ -29,77 +29,41 @@
             <div class="col-lg-4 mx-auto">
               <div class="auto-form-wrapper">
                 <form method="post" action="#" enctype="multipart/form-data">
-                  <h2 class="text-center mb-4">Registro</h2>
+                  <h2 class="text-center mb-4">Cambio Contraseña</h2>
+                  <p>{{ user.username }}</p>
                   {% csrf_token %}
                   <div class="form-group">
-                    <label class="label">Nombre</label>
-                    {% if form.first_name.value %}
+                    <label class="label">Contraseña</label>
                     <div class="input-group">
-                      <input type="text" class="form-control" name="first_name" value="{{ form.first_name.value }}" placeholder="Nombre">
+                      <input type="password" class="form-control" name="password1" placeholder="Password">
                       <div class="input-group-append">
                         <span class="input-group-text">
                           <!--<i class="mdi mdi-check-circle-outline"></i>-->
                         </span>
                       </div>
                     </div>
-                    {% else %}
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="first_name" placeholder="Nombre">
-                        <div class="input-group-append">
-                          <span class="input-group-text">
-                            <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                          </span>
-                        </div>
-                      </div>
-                    {% endif %}
-                  </div>
-                  <div class="form-group">
-                    <label class="label">Apellido</label>
-                    {% if form.last_name.value %}
-                    <div class="input-group">
-                      <input type="text" class="form-control" name="last_name" value="{{ form.last_name.value }}" placeholder="Apellido">
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                        </span>
-                      </div>
-                    </div>
-                    {% else %}
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="last_name" placeholder="Apellidos">
-                        <div class="input-group-append">
-                          <span class="input-group-text">
-                            <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                          </span>
-                        </div>
-                      </div>
-                    {% endif %}
-                  </div>
-                  <div class="form-group">
-                    <label class="label">Email</label>
-                    {% if form.email.value %}
-                    <div class="input-group">
-                      <input type="email" class="form-control" name="email" value="{{ form.email.value }}" placeholder="Email">
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                        </span>
-                      </div>
-                    </div>
-                    {% else %}
-                    <div class="input-group">
-                        <input type="email" class="form-control" name="email" placeholder="Email">
-                        <div class="input-group-append">
-                          <span class="input-group-text">
-                            <!--<i class="mdi mdi-check-circle-outline"></i>-->
-                          </span>
-                        </div>
-                      </div>
-                    {% endif %}
-                    {% if form.email.errors %}
-                    {% for error in form.email.errors %}
+                    {% if form.password1.errors %}
+                    {% for error in form.password1.errors %}
                     <div class="input-error">
-                        {{ error }}
+                      {{ error }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label class="label">Confirmar contraseña</label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <!--<i class="mdi mdi-check-circle-outline"></i>-->
+                        </span>
+                      </div>
+                    </div>
+                    {% if form.password2.errors %}
+                    {% for error in form.password2.errors %}
+                    <div class="input-error">
+                      {{ error }}
                     </div>
                     {% endfor %}
                     {% endif %}
