@@ -1,6 +1,6 @@
 from .forms import EventosForm, StaffForm, InvitacionesForm
 from .models import Evento, Staff, Invitacion
-from .utils import send_email, invitacion_activacion_token
+from .utils import send_email, invitacion_activacion_token, make_qr
 from User.models import User
 from django.db.models import Q
 from django.http import HttpResponse
@@ -10,7 +10,7 @@ from django.views.generic import TemplateView, ListView
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
-
+import qrcode
 # Create your views here.
 
 
@@ -50,6 +50,9 @@ def RegisterEvent(request, id1, id2):
                         'uid':urlsafe_base64_encode(force_bytes(inv.pk)),
                         'token':invitacion_activacion_token.make_token(inv), # esto me causa dudas
                 })
+                # content += message
+                img = make_qr(message)
+                img.save(id1 + id2 + '.png')
                 content += message
                 send_email(guest, subject, content)
                 # print (user)
