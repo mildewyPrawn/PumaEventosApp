@@ -31,7 +31,7 @@
         {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
         <!-- partial:partials/_sidebar.html -->
-        {% include 'partials/_sidebar.html' %}   
+        {% include 'partials/_sidebar.html' %}
         <!-- partial -->
 
         <!-- AQUI va el codigo base!! -->
@@ -40,16 +40,19 @@
           <div class="content-wrapper">
             <div class="card">
               <div class="card-body">
-                
+
                 <h4>Lista de eventos</h4>
                 <lo>
-                  <dl> 
+                  <dl>
                     <li><h5>Nombre :</h5>{{evento.nombre}} <br>
                       <h5>Descripcion :</h5> <dd>{{evento.descripcion}}</dd>
                       <h5>Fecha Inicio : {{evento.fecha_inicio}}</h5>
                       <h5>Fecha Fin : {{evento.fecha_fin}}</h5>
                       <h5>Direccion : {{evento.direccion}}</h5>
                       <h5>Capacidad : {{evento.capacidad}}</h5>
+                      <h5>Hora de inicio : {{evento.horario_inicio}}</h5>
+                      <h5>Hora de término : {{evento.horario_fin}}</h5>
+
                       {% if user.usuario.es_Organizador == True or user.usuario.es_Staff == True %}
                       <a href="{% url 'Invitaciones' evento.id %}">Ver Invitaciones del Evento</a>
                       {% else %}
@@ -82,7 +85,7 @@
               </div>
             </div>
 
-            
+
             <!-- AQUI Termina el codigo base!! -->
 
 
