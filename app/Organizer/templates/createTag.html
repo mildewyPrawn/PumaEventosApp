@@ -31,13 +31,17 @@
         {% include 'partials/_settings-panel.html' %}
         <!-- partial -->
         <!-- partial:../../partials/_sidebar.html -->
-        {% include 'partials/_sidebar.html' %}   
+        {% include 'partials/_sidebar.html' %}
         <!-- partial -->
 
         <!-- AQUI va el codigo base!! -->
+
         <div class="main-panel">
-          <div class="content-wrapper"> 
-            <h1>New/Update Event</h1>
+          <div class="content-wrapper">
+            <div class="card">
+              <div class="card-body">
+
+            <h1>Crea una etiqueta.</h1>
             <form method="POST">
               {% csrf_token %}
               {{ form.non_field_errors }}
@@ -53,14 +57,16 @@
                   </section>
 
                 </div>
-                
+
                 <button type="submit">Save</button>
             </form>
-            
-            
+
+
             <!-- AQUI Termina el codigo base!! -->
 
 
+            </div>
+            </div>
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:../../partials/_footer.html -->
