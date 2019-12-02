@@ -53,6 +53,16 @@
     </li>
     {% else %}
     {% endif %}
+    {% if user.usuario.es_Organizador == True %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'createEvent' %}">
+      <!-- <a class="nav-link" href="/../../MisStaffs/listStaffs"> -->
+        <i class="menu-icon fa fa-calendar-o"></i>
+        <span class="menu-title">Crear Evento</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}    
     <li class="nav-item">
       <a class="nav-link" href="/../../eventos/home">
         <i class="menu-icon fa fa-tags"></i>

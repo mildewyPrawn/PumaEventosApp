@@ -6,7 +6,7 @@ from User.models import User, Usuario
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import send_mail, EmailMultiAlternatives, EmailMessage
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
@@ -41,7 +41,8 @@ def RegisterEvent(request, id1, id2):
     Vista para registrar un evento
     """
     evento = Evento.objects.get(pk=id1)
-    usuario = User.objects.get(pk=id2)
+    # usuario = User.objects.get(pk=id2)
+    usuario = request.user
     template = 'registerEvent.html'
     context = {'evento':evento, 'user':usuario}
     if request.method == 'POST':
@@ -63,19 +64,15 @@ def RegisterEvent(request, id1, id2):
                     'token':invitacion_activacion_token.make_token(inv), # esto me causa dudas
                 })
             img = make_qr(message)
-            img.save('images/' + id1 + id2 + '.png')
-            nombre = 'images/' + id1 + id2 + '.png'
+            img.save('images/' + str(id1) + str(request.user) + '.png')
+            nombre = 'images/' + str(id1) + str(request.user) + '.png'
             im = Image.open(nombre)
             Invitacion.objects.filter(pk=id1).update(qr=im)
             content += message
             # Generar el correo en html
-            msge = EmailMultiAlternatives(subject=subject, body=content, from_email=settings.EMAIL_HOST_USER, to=guest)
-            html_template = '<h1>Hola '+usuario.username+'</h1>\n'
-            html_template += '<h2>Por favor enseña el siguiente código a un miembro del staff para registrar tu entrada:</h2>'
-            html_template += '<img src=images/12.png.url enctype="multipart/form-data">'
-            html_template += message
-            msge.attach_alternative(html_template, 'text/html')
-            msge.send()
+            email = EmailMessage(subject, content, settings.EMAIL_HOST_USER, guest)
+            email.attach_file('images/' + str(id1) + str(request.user) + '.png')
+            email.send()
             print(usuario.email)
             print(evento.nombre)
             return HttpResponse('Se ha enviado la invitación por correo :3')    
