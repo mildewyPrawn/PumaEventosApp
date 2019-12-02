@@ -6,5 +6,4 @@ from django.contrib import admin
 admin.site.register(Usuario)
 
 # Register your models here.
-# admin.site.register(User)
 admin.site.register(AcademicEntity)

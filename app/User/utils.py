@@ -1,9 +1,12 @@
+from django.contrib.auth.password_validation  import MinimumLengthValidator
+from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
 from django.utils.translation import ngettext
-from django.core.exceptions import ValidationError
-from django.contrib.auth.password_validation  import MinimumLengthValidator
 
 class IsNotAuthenticatedMixin:
+    """
+    Pregunta si ya está registrado
+    """
     redirect_url = "/"
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
@@ -12,6 +15,9 @@ class IsNotAuthenticatedMixin:
             return redirect(self.redirect_url)
 
 class TamMinContrasena(MinimumLengthValidator):
+    """
+    Verifica el tamaño de la contraseña
+    """
     def validate(self, password, user=None):
         if len(password) < self.min_length:
             raise ValidationError(
@@ -23,10 +29,8 @@ class TamMinContrasena(MinimumLengthValidator):
                 code="password_too_short",
                 params={'min_length': self.min_length}
             )
-        #return super().validate(password, user=user)
     
     def get_help_text(self):
-        #return super().get_help_text()
         return ngettext(
             "Su contraseña debe tener al menos %(min_length)d caracter",
             "Su contraseña debe tener al menos %(min_length)d caracteres",

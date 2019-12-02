@@ -1,7 +1,11 @@
 from .forms import CreaOrganizador, SingInForm, CreateUrs, FCambioContrasena
+from .forms import CreateUrs, SingInForm
+from .models import User
 from .models import Usuario
 from .tokens import account_activation_token
 from .utils import IsNotAuthenticatedMixin
+from Organizer.models import *
+from django.contrib import messages
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
@@ -18,22 +22,11 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
 from django.views.generic import CreateView, TemplateView
-from django.contrib import messages
 import urllib
-
-from Organizer.models import *
-
-from .models import User
-from .forms import CreateUrs, SingInForm
-
-# from Post.models import Post
-# from Home.forms import LoginForm
-# Function Views
-
 
 def Index(request):
     """
-        Index in my Web Page.
+    Index de la página web
     """
     print(request.method)
     template = 'User/general/index.html'
@@ -41,33 +34,40 @@ def Index(request):
     return render(request, template, context)
 
 def error505(request):
+    """
+    Sino encuentra una url, muestra un lindo mensaje.
+    """
     print(request.method)
     template = 'User/general/505.html'
     context = {}
     return render(request, template, context)
 
 class HomeView(LoginRequiredMixin, CreateView):
+    """
+    Vista principal
+    """
     template = 'User/indexpl.html'
     def get(self, request):
         return render(request, self.template)
 
-#Login que si hace algo.
 class SignUpView(View):
-    #model = Usuario
+    """
+    Vista para registrarse
+    """
     template = 'User/registration/register.html'
     context = {}
 
     def get(self, request):
         form = CreateUrs()
-        #form2 = SingUpForm()
         return render(request, self.template)
 
     def post(self, request):
+        """
+        Te registra y manda correo de verificación
+        """
         form = CreateUrs(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
-            
-            #user2 = Usuario.create_user_Usuario(user, form.clean_avatar)
             user.is_active = False
             user.save()
             user2 = Usuario(
@@ -77,12 +77,7 @@ class SignUpView(View):
                 es_Staff = False
             )
             user2.save()
-            #print(user)
             current_site = get_current_site(request)
-            """
-            if condicion:
-                form.add.errors(field, error)
-            """
             mail_subject = 'Activate your PumaEventos account.'
             message = render_to_string('acc_active_email.html', {
                 'user': user,
@@ -90,21 +85,23 @@ class SignUpView(View):
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':account_activation_token.make_token(user),
             })
+            # Mandar correo
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            #context = {"message":'Please confirm your email address to complete the registration'}
             context ={"msg":"1"}
+            # Avisa de que el correo ha sido enviado
             return redirect('/../home/?' + urllib.parse.urlencode(context))
-            #return HttpResponse('Please confirm your email address to complete the registration')
         else:
             self.context['form'] = form
-        #print(form.errors, "asdads")
         return render(request, self.template, self.context)
 
 def activate(request, uidb64, token):
+    """
+    Activa la nueva cuenta, con el link que se manda por correo
+    """
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -114,37 +111,35 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
-        # messages.info(request,'Thank you for your email confirmation. Now you can login your account.')
-        #return HttpResponseRedirect('/login/')
-        #context={"message":'Thank you for your email confirmation. Now you can login your account.'}
         context ={"msg":"2"}
         return redirect('/../home/?' + urllib.parse.urlencode(context) )
     else:
-        #return HttpResponse('Activation link is invalid!')
         context ={"msg":"3"}
         return redirect('/../home/?' + urllib.parse.urlencode(context) )
 
 def activateEvent(request, uidb64, token):
-        try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
-            inv = Invitacion.objects.get(pk=uid)
-            print('>>>>>>')
-            print(inv)
-            print('>>>>>>')
-        except(TypeError, ValueError, OverflowError):
-            inv = None
-        if inv is not None:
-            Invitacion.objects.filter(pk=uid).update(activa=False,
-                                                     asistencia_activa=True)
-            print('+++', inv.asistencia_activa)
-            if inv.asistencia_activa:
-                return HttpResponse('Su presencia ya fue registrada.')                
-            return HttpResponse('Su presencia ha sido registrada.')
-        else:
-            return HttpResponse('Su presencia ya fue registrada.')
+    """
+    Da la activación para una invitación a un evento
+    """
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        inv = Invitacion.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError):
+        inv = None
+    if inv is not None:
+        Invitacion.objects.filter(pk=uid).update(activa=False,
+                                                 asistencia_activa=True)
+        # Si ya estaba activo no se puede registrar de nuevo
+        if inv.asistencia_activa:
+            return HttpResponse('Su presencia ya fue registrada.')                
+        return HttpResponse('Su presencia ha sido registrada.')
+    else:
+        return HttpResponse('Su presencia ya fue registrada.')
 
 class RegistroOrganizador(LoginRequiredMixin, View):
+    """
+    Vista para registrar a un organizador, solo el admin puede
+    """
     template = "User/registration/registrOrgnz.html"
     context = {}
     
@@ -168,10 +163,6 @@ class RegistroOrganizador(LoginRequiredMixin, View):
             )
             user2.save()
             current_site = get_current_site(request)
-            """
-            if condicion:
-                form.add.errors(field, error)
-            """
             mail_subject = 'Activate your PumaEventos account.'
             message = render_to_string('acc_active_org.html', {
                 'user': user,
@@ -179,18 +170,21 @@ class RegistroOrganizador(LoginRequiredMixin, View):
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':account_activation_token.make_token(user),
             })
+            # manda correo de confirmación
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            #Add render page, Usuario creado
-            return HttpResponse("Creado weon")
+            return HttpResponse("Ha sido registrado.")
         else:
             self.context['form'] = form
         return render(request, self.template, self.context)  
 
 def organizador_registrado(request, uidb64, token):
+    """
+    Verifica el registro de un organizador
+    """
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -200,13 +194,14 @@ def organizador_registrado(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
-        #redirect()
         return redirect('/register/cambioContrasena')
     else:
         return HttpResponse('Activation link is invalid!')
 
 class CambioContrasena(View):
+    """
+    Vista para cambiar de contraseña
+    """
     template = "User/registration/cambioContra.html"
     context = {}
 
@@ -224,48 +219,45 @@ class CambioContrasena(View):
             self.context['form'] = form
         return render(request, self.template, self.context)
 
-#Login que si hace algo.
 class SignInView(IsNotAuthenticatedMixin ,View):
-    #template_name = 'User/registration/login.html'
+    """
+    Vista para iniciar sesión
+    """
     template = 'User/registration/login.html'
     context = {}
 
     def get(self, request):
         form = SingInForm()
-        #print("im here")
         return render(request, self.template)
     
     def post(self, request):
         """
-            Validates and do the login
+        Valida y hace el login
         """
-        #if request.user.is_authenticated():
-        #    return redirect('/home/')
         form = SingInForm(request.POST)
-        #print("im here") 
         if form.is_valid():
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            #print(user, "asdasdasdad")
             if user is not None:
                 login(request, user)
                 if request.GET.get("next", None) is not None:
                     return redirect(request.GET.get("next"))
                 return redirect('/eventos/')
-            #messages.add_message(request, messages.INF ─O, 'Hello world.')
             form.add_error("username","Usuario o contraseña erroneos.")
             self.context['form'] = form
-            #print(form.errors)
             return render(request, self.template, self.context)
         return render(request, self.template, self.context)
 
 class LogoutView(LoginRequiredMixin, View):
+    """
+    Hace el logout, redige a la landing page
+    """
     def get(self, request):
         logout(request)
         return redirect("/")
 
 def Register(request):
     """
-        Register to app.
+    Registrarse en la aplicación
     """
     print(request.method)
     template = 'User/registration/register.html'
@@ -273,6 +265,9 @@ def Register(request):
     return render(request, template, context)
 
 class EventosN(LoginRequiredMixin, CreateView):
+    """
+    Vista de los eventos
+    """
     context = {}
     template = 'User/eventos/home.html'
 
@@ -281,7 +276,6 @@ class EventosN(LoginRequiredMixin, CreateView):
         user = request.user
         print("...............................")
         print(user)
-        #print()
         print("...............................")
         self.context = {'user':user}
         return render(request, self.template, self.context)
@@ -295,7 +289,6 @@ def Eventos(request):
     user = request.user
     print("...............................")
     print(user)
-    # print(request.user.usuario.avatar.url)
     print("...............................")
     context = {'user':user}
     return render(request, template, context)
@@ -304,7 +297,7 @@ def Eventos(request):
 
 def EventosList(request):
     """
-        All Eventos home Page
+    Todos los eventos en el home
     """
     print(request.method)
     template = 'User/eventos/all.html'
@@ -318,6 +311,9 @@ def EventosList(request):
     return render(request, template, context)
 
 def logout_request(request):
+    """
+    Hace logout
+    """
     template = 'User/general/index.html'
     context ={}
     logout(request)
@@ -325,18 +321,21 @@ def logout_request(request):
 
 class About(View):
     """
-        About me page.
+    Página del about
     """
     template = 'User/general/about.html'
     context = {'title': 'About me'}
 
     def get(self, request):
         """
-            Get in About me.
+        Ingresa al about
         """
         return render(request, self.template, self.context)
 
 def signup(request):
+    """
+    Hace el registro (No en uso)
+    """
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():

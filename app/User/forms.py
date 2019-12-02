@@ -1,25 +1,31 @@
+from .models import Usuario
 from django import forms
-import random
-import string
-from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.files.images import get_image_dimensions
+from django.forms import ModelForm
 from django.forms import ValidationError
-from .models import Usuario
+import random
+import string
 
 class SingInForm(forms.Form):
+    """
+    Iniciar sesión
+    """
     username = forms.CharField(label='Usuario', max_length=100)
     password = forms.CharField(label='Contraseña')
 
 class CreateUrs(UserCreationForm):
-    avatar = forms.ImageField(required=False, help_text='Puedes no poner una imagen.')
-    #def __init__(self, *args, **kwargs):
-    #    super(CreateUrs, self).__init__(*args, **kwargs)
-    #    for field_name, field in self.fields.items():
-    #        field.required = True
+    """
+    Crear usuarios
+    """
+    avatar = forms.ImageField(required=False,
+                              help_text='Puedes no poner una imagen.')
 
     class Meta:
+        """
+        Datos que se piden al nuevo usuario
+        """
         model = User
         fields = (
             'first_name',
@@ -27,26 +33,27 @@ class CreateUrs(UserCreationForm):
             'email',
             'password1',
             'password2',
-            #'avatar',
         )
 
     def clean_email(self):
+        """
+        Validar email
+        """
         email = self.cleaned_data['email']
         if not email.endswith('unam.mx'):
             raise ValidationError('El dominio no es valido.')
         return email
 
     def clean_avatar(self):
+        """
+        Verificar el avatar
+        """
         avatar = self.cleaned_data['avatar']
         print(avatar)
         if avatar is None:
             return None
-        #retunr null
         try:
             w, h = get_image_dimensions(avatar)
-            #if w > 1000 or h > 1000:
-            #    raise ValidationError(u'Please use an image that is '
-            #         '%s x %s pixels or smaller.' % (100, 100))
             return avatar
         except AttributeError:
             """
@@ -57,25 +64,25 @@ class CreateUrs(UserCreationForm):
         return avatar
     
     def save(self, commit=True):
+        """
+        Crea un nuevo usuario y lo regresa
+        """
         username = self.cleaned_data.get('username')
         first_name = self.cleaned_data.get('first_name')
         last_name = self.cleaned_data.get('last_name')
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password2')
-        #avatar = self.clean_avatar()
-        user = User.objects.create_user(username=email, first_name=first_name, last_name=last_name,
-                                        email=email, password=password)
-        #user.is_active = False
-        #user1 = Usuario.create_user_Usuario(user, avatar)
-        #user.set_username()
-        #user1 = user.get
+        user = User.objects.create_user(username=email, first_name=first_name,
+                                        last_name=last_name, email=email,
+                                        password=password)
         if commit:
-            #user.save()
-            #return user
             pass
         return user
 
 class FCambioContrasena(ModelForm):
+    """
+    Formulario para cambiar contraseña, esto solo se usa en organizador
+    """
     password1 = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(widget=forms.PasswordInput)
 
@@ -84,6 +91,9 @@ class FCambioContrasena(ModelForm):
         super(FCambioContrasena, self).__init__(*args, **kwargs)
     
     def clean_password1(self):
+        """
+        Verificar contraseñas
+        """
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2:
@@ -92,12 +102,18 @@ class FCambioContrasena(ModelForm):
         return password2
 
     def save(self, commit=True):
+        """
+        Guardar nueva contraseña
+        """
         self.user.set_password(self.cleaned_data['password2'])
         if commit:
             self.user.save()
         return self.user
 
     class Meta:
+        """
+        Datos que pedimos para cambiar la contraseña
+        """
         model = User
         fields = (
             'password1',
@@ -105,12 +121,16 @@ class FCambioContrasena(ModelForm):
         )
 
 class CreaOrganizador(ModelForm):
-    #email = forms.EmailField(max_length=200, help_text='Required', required=True)
-    #avatar = forms.ImageField(required=False)
-    #email = forms.EmailField(max_length=200, help_text='Required'perla)
-    avatar = forms.ImageField(required=False, help_text='Puedes no poner una imagen.')
+    """
+    Crear un organizador, solo el admin puede hacerlo
+    """
+    avatar = forms.ImageField(required=False,
+                              help_text='Puedes no poner una imagen.')
 
     class Meta:
+        """
+        Datos que se piden para ser organizador.
+        """
         model = User
         fields = (
             'first_name',
@@ -119,26 +139,31 @@ class CreaOrganizador(ModelForm):
         )
     
     def clean_email(self):
+        """
+        Verificación del email
+        """
         email = self.cleaned_data['email']
         if not email.endswith('unam.mx'):
             raise ValidationError('El dominio no es valido.')
         return email
     
     def randPasw(self):
+        """
+        Genera una contraseña al azar para después cambiarla
+        """
         letters = string.ascii_lowercase
         return ''.join(random.sample(letters, 9))
 
     def clean_avatar(self):
+        """
+        Verifica el avatar
+        """
         avatar = self.cleaned_data['avatar']
         print(avatar)
         if avatar is None:
             return None
-        #retunr null
         try:
             w, h = get_image_dimensions(avatar)
-            #if w > 1000 or h > 1000:
-            #    raise ValidationError(u'Please use an image that is '
-            #         '%s x %s pixels or smaller.' % (100, 100))
             return avatar
         except AttributeError:
             """
@@ -149,11 +174,16 @@ class CreaOrganizador(ModelForm):
         return avatar
     
     def save(self, commit=True):
+        """
+        Guarda un nuevo administrador
+        """
         first_name = self.cleaned_data.get('first_name')
         last_name = self.cleaned_data.get('last_name')
         email = self.cleaned_data.get('email')
         password = self.randPasw()
-        user = User.objects.create_user(username=email, first_name=first_name, last_name=last_name, email=email, password=password)
+        user = User.objects.create_user(username=email, first_name=first_name,
+                                        last_name=last_name, email=email,
+                                        password=password)
         if commit:
             pass
         return user
