@@ -1,4 +1,4 @@
-from .models import Evento,Staff,Invitacion
+from .models import Evento,Staff,Invitacion, Etiqueta
 from django import forms
 
 class EventosForm(forms.ModelForm):
@@ -26,3 +26,11 @@ class InvitacionesForm(forms.ModelForm):
     class Meta(object):
 	    model = Invitacion
 	    fields = ['evento_id','user_id','activa','asistencia_activa', 'qr',]
+
+class EtiquetaForm(forms.ModelForm):
+    """
+    Datos para la etiqueta
+    """
+    class Meta:
+	    model = Etiqueta
+	    fields = ['nombre']

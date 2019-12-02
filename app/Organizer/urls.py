@@ -25,4 +25,6 @@ urlpatterns = [
     ######## REGISTER EVENT ########
     path('eventos/register/<str:id1>/<str:id2>', RegisterEvent,
          name='registerEvent'),
+    ######## CREATE TAG ########
+    path('tags', newTag, name='newTag'),
 ]
