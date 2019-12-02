@@ -133,10 +133,10 @@ def activateEvent(request, uidb64, token):
                                                  asistencia_activa=True)
         # Si ya estaba activo no se puede registrar de nuevo
         if inv.asistencia_activa:
-            return HttpResponse('Su presencia ya fue registrada.')                
-        return HttpResponse('Su presencia ha sido registrada.')
+            return render(request, 'User/eventos/asistDup.html')                
+        return render(request, 'User/eventos/confirAsist.html')
     else:
-        return HttpResponse('Su presencia ya fue registrada.')
+        return render(request, 'User/eventos/asistDup.html')
 
 class RegistroOrganizador(LoginRequiredMixin, View):
     """
@@ -178,7 +178,7 @@ class RegistroOrganizador(LoginRequiredMixin, View):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            return HttpResponse("Ha sido registrado.")
+            return render(request, 'User/registration/confirm.html', context={'email':to_email})
         else:
             self.context['form'] = form
         return render(request, self.template, self.context)  

@@ -75,7 +75,7 @@ def RegisterEvent(request, id1, id2):
         email.send()
         print(usuario.email)
         print(evento.nombre)
-        return HttpResponse('Se ha enviado la invitación por correo :3')    
+        return render(request, 'invitacionEnviada.html')    
     return render(request, template, context)                
 
 ##########################################################################
@@ -124,6 +124,7 @@ def deleteEvent(request, id):
     """
     evento = Evento.objects.get(id=id)
     if request.method == 'POST':
+        print(evento)
         evento.delete()
         return redirect('listMyEvents')
     return render(request, 'prod_delete-confirm.html',{'evento':evento})
