@@ -42,11 +42,11 @@ def error505(request):
     context = {}
     return render(request, template, context)
 
-class HomeView(LoginRequiredMixin, CreateView):
+class HomeView(CreateView):
     """
     Vista principal
     """
-    template = 'User/indexpl.html'
+    template = 'User/general/index.html'
     def get(self, request):
         return render(request, self.template)
 
@@ -74,7 +74,8 @@ class SignUpView(View):
                 user=user, 
                 avatar=form.clean_avatar(),
                 es_Organizador = False,
-                es_Staff = False
+                es_Staff = False,
+                entidad = form.clean_entidad(),
             )
             user2.save()
             current_site = get_current_site(request)
@@ -111,6 +112,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
+        logout(request)
         context ={"msg":"2"}
         return redirect('/../home/?' + urllib.parse.urlencode(context) )
     else:

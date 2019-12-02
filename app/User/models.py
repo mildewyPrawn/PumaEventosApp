@@ -11,6 +11,7 @@ class Usuario(models.Model):
     avatar = models.ImageField(upload_to='images/', blank=True, null=True)
     es_Organizador = models.BooleanField(default=False)
     es_Staff = models.BooleanField(default=False)
+    entidad = models.CharField(max_length=300, null=True)
 
     def __str__(self):
         return str(self.user)

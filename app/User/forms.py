@@ -21,6 +21,7 @@ class CreateUrs(UserCreationForm):
     """
     avatar = forms.ImageField(required=False,
                               help_text='Puedes no poner una imagen.')
+    entidad = forms.CharField(required=True)
 
     class Meta:
         """
@@ -40,9 +41,15 @@ class CreateUrs(UserCreationForm):
         Validar email
         """
         email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise ValidationError('Ese correo ya fue registrado.')
         if not email.endswith('unam.mx'):
             raise ValidationError('El dominio no es valido.')
         return email
+    
+    def clean_entidad(self):
+        entidad = self.cleaned_data['entidad']
+        return entidad
 
     def clean_avatar(self):
         """
