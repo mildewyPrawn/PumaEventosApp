@@ -1,6 +1,7 @@
 from User.models import User
 from django.contrib.auth.models import User as UserDjango
 from django.db import models
+from django import forms
 from django.template.defaultfilters import slugify
 import django
 
@@ -71,4 +72,4 @@ class ValidaInvitacion(models.Model):
         """
         Llave compuesta
         """
-        unique_together = (('user_id', 'invitacion_id'),)    
+        unique_together = (('user_id', 'invitacion_id'),)
